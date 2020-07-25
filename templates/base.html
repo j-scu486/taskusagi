@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- NAVBAR -->
+    {% block navbar %}
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+        <a href="{% url 'profile_edit' %}">Edit Profile</a>
+        <a href="{% url 'logout' %}">Logout</a>
+        <!-- Messages -->
+    <!-- If Tasker, show these links: -->
+        {% if request.user.is_tasker %}
+            <a href="{% url 'tasks' %}">View Tasks</a>
+            <a href="{% url 'tasker-schedule' %}">My Schedule</a>
+        {% endif %}
+    <!-- If seeker, show these links: -->
+        {% if request.user.is_seeker %}
+            <a href="{% url 'booking' %}">View my bookings</a>
+            <!-- Only for test -->
+            <a href="{% url 'schedule-booking' _id=9%}">Make a booking</a> 
+        {% endif %}
+        
+    {% endif %}
+    {% endblock %}
+
+    {% block content %}
+
+    {% endblock %}
+
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>
+    {% block scripts %}
+
+    {% endblock %}
+</body>
+</html>

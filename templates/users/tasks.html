@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Add tasks</h2>
+<div>
+    {% for task in tasks %}
+        <div>
+            <p>{{ task.category }} | {{ task.price}}</p>
+            <p>{{ task.description }}</p>
+            <form action="{% url 'task-delete' task.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+
+        </div>
+    {% endfor %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+
+</div>
+{% endblock %}

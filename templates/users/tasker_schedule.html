@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Schedule</h1>
+
+{% for schedule in schedule_list %}
+    <p>
+        {{ schedule }}
+        <form action="{% url 'tasker-schedule-delete' schedule.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">X</button>
+        </form>
+    </p>
+
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+</form>
+{% endblock %}

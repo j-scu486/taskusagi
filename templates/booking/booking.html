@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="submit">
+
+</form>
+{{ bookings }}
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+    // https://xdsoft.net/jqplugins/datetimepicker/#disabledWeekDays
+    // https://stackoverflow.com/questions/27173140/jquery-date-and-timepicker-different-time-on-specific-day
+
+
+    $(function () {
+        // Get current taskers full schedule as JSON
+        // When a user clicks on a date, a check aginst the JSON obj will be done
+        // If a schedule is found, allowTimes will be set based on the result of the check
+        // Else, it is just the regular time schedule
+
+        var bookingsObj = {};
+        var datePickerTime = function(currentDateTime) {
+            let day = (currentDateTime.getUTCDate()).toString().padStart(2,0);
+            let month = (currentDateTime.getUTCMonth() + 1).toString().padStart(2,0);
+            let year = currentDateTime.getUTCFullYear();
+
+            let fullDate = `${year}-${month}-${day}`
+            let allowTimesArray = null
+            let bookedArray = null
+            const dummyThis = this
+
+            $.ajax({
+                url: 'ajax/booking',
+                data: {
+                    'booking': currentDateTime.getDay(),
+                    'user': {{ user_id }},
+                    'date': fullDate,
+                },
+                dataType: 'json',
+                success: function(data){
+                    allowTimesArray = [...data.available]
+                    bookedArray = [...data.booked]
+                }
+            }).done(function() {
+                for(let i=0; i < allowTimesArray.length; i++){                    
+                    if(allowTimesArray.includes(bookedArray[i])){
+                        allowTimesArray.splice(allowTimesArray.indexOf(bookedArray[i]), 2)
+                    } 
+                }
+                dummyThis.setOptions({
+                    allowTimes: allowTimesArray
+                })
+            })
+        };
+
+      $("#id_booking").datetimepicker({
+        format: 'd/m/Y H:i',
+        inline: true,
+        disabledWeekDays: {{ day_arr }},
+        onChangeDateTime: datePickerTime,
+      });
+
+    });
+</script>
+{% endblock %}
