@@ -1,5 +1,3 @@
-# taskusagi
-A "TaskRabbit" clone, but for foreigners in Japan
 <h1>TaskUsagi</h1>
 
 <h2>A "TaskRabbit" Clone; but for foreigners in Japan </h2>
