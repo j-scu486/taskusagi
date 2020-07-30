@@ -4,7 +4,33 @@
     <h1>HOME PAGE</h1>
 
     <!-- If the user is a tasker... -->
+    {% if user.is_tasker %}
+        <h2>Welcome back, {{ user.first_name }}</h2>
+        <div class="upcoming-jobs">
+            {% if upcoming_tasks %}
+                <h3>Upcoming jobs</h3>
+                {% for task in upcoming_tasks %}
+                    <p>{{ task.seeker }}</p>
+                    <p>{{ task.category }}</p>
+                    <p>{{task.booking}}</p>
+                    <a href="{{ task.get_absolute_url }}">Click for more info</a>
+                {% endfor %}
+            {% endif %}
+            
+        </div>
+        <div class="month-pay">
+            <p>You've made ￥{{ month_earnings }} this month</p>
+        </div>
+    {% endif%}
 
     <!-- If the user is a seeker... -->
+    {% if user.is_seeker%}
+        <h2>Whats your next task?</h2>
+        {% for category in categories %}
+            <p>
+                <a href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
+            </p>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}

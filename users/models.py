@@ -36,6 +36,7 @@ class TaskSeeker(models.Model):
 
 class Tasker(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
@@ -124,6 +125,9 @@ class TaskCanDo(models.Model):
     )    
     description = models.TextField(max_length=100)
     price = models.IntegerField()
+
+    def catagory_display(self):
+        return self.get_category_display()
 
     def __str__(self):
         return '{} | {}'.format(self.tasker, self.get_category_display())

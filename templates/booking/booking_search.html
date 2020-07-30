@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Find {{ category_name|lower }} services in your area today!</h2>  
+    <form method="GET">
+        <select name="price" id="price">
+            <option value="high">Price: Highest</option>
+            <option value="low">Price: Lowest</option>
+        </select>
+        <button type="submit">Sort</button>
+    </form>  
+    {% for result in results %}
+        <p>{{result.tasker }} -- ￥{{ result.price }} Rating: {{ result.tasker.rating }}</p><a href="{% url 'booking:schedule-booking' _id=result.tasker.user.id category=result.category %}">Book</a>
+        
+    {% endfor %}
+{% endblock %}

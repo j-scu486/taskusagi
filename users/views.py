@@ -3,25 +3,28 @@ from django.urls import reverse_lazy
 from django.views import generic 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
+from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
-from django.http import HttpResponse
 from django.core.exceptions import PermissionDenied
+from django.utils.text import slugify
+from datetime import datetime
 
-from .forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm
-from .models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule
+from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm
+from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule
+from booking.models import ScheduleBooking
 from .decorators import seeker_required, tasker_required
 
 class SignUpView(generic.TemplateView):
     template_name = 'signup.html'
 
 class SeekerSignUpView(generic.CreateView):
-    form_class = CustomUserCreationForm
+    form_class = SeekerSignUpForm
     template_name = 'registration/seeker_signup.html'
 
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('profile_edit')
+        return redirect('user:profile_edit')
 
 class TaskerSignUpView(generic.CreateView):
     form_class = TaskerSignUpForm
@@ -30,7 +33,7 @@ class TaskerSignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('profile_edit')
+        return redirect('user:profile_edit')
 
 @login_required
 def edit_profile(request):
@@ -39,7 +42,8 @@ def edit_profile(request):
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
-            return HttpResponse('All good!')
+            messages.add_message(request, messages.SUCCESS, 'Profile updated!')
+            return redirect('user:profile_edit')
     else:
         form = CustomUserChangeForm(instance=request.user)
 
@@ -71,7 +75,7 @@ def task_delete(request, _id):
     if request.method == 'POST':
         obj.delete()
     
-    return redirect('tasks')
+    return redirect('user:tasks')
 
 @user_passes_test(tasker_required)
 @login_required
@@ -89,7 +93,8 @@ def tasker_schedule(request):
             schedule.tasker = Tasker.objects.filter(user=request.user.id)[0]
 
             schedule.save()
-            return redirect('tasker-schedule')
+            messages.add_message(request, messages.SUCCESS, 'You added a new task!')
+            return redirect('user:tasker-schedule')
     else:
         form = ScheduleCreateForm(user=request.user)
 
@@ -103,8 +108,16 @@ def tasker_schedule_delete(request, _id):
     if request.method == 'POST':
         obj.delete()
 
-    return redirect('tasker-schedule')
+    return redirect('user:tasker-schedule')
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    categories = TaskCanDo.TASK_CHOICES
+    upcoming_tasks = None
+    month_earnings = None
+
+    if request.user.is_tasker:
+        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.id, booking__contains=datetime.today().strftime("%Y-%m-%d")).order_by('booking')[:3]
+        month_earnings = ScheduleBooking.get_month_earnings()
+        
+    return render(request, 'dashboard.html', {'categories': categories, 'upcoming_tasks': upcoming_tasks, 'month_earnings': month_earnings})

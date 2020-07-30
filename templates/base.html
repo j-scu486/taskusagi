@@ -11,20 +11,18 @@
     <!-- NAVBAR -->
     {% block navbar %}
     {% if request.user.is_authenticated %}
-        <a href="{% url 'dashboard' %}">Dashboard</a>
-        <a href="{% url 'profile_edit' %}">Edit Profile</a>
+        <a href="{% url 'user:dashboard' %}">Dashboard</a>
+        <a href="{% url 'user:profile_edit' %}">Edit Profile</a>
+        <a href="{% url 'booking:booking-list' request.user.id %}">View my bookings</a>
         <a href="{% url 'logout' %}">Logout</a>
         <!-- Messages -->
     <!-- If Tasker, show these links: -->
         {% if request.user.is_tasker %}
-            <a href="{% url 'tasks' %}">View Tasks</a>
-            <a href="{% url 'tasker-schedule' %}">My Schedule</a>
+            <a href="{% url 'user:tasks' %}">View Tasks</a>
+            <a href="{% url 'user:tasker-schedule' %}">My Schedule</a>
         {% endif %}
     <!-- If seeker, show these links: -->
         {% if request.user.is_seeker %}
-            <a href="{% url 'booking' %}">View my bookings</a>
-            <!-- Only for test -->
-            <a href="{% url 'schedule-booking' _id=9%}">Make a booking</a> 
         {% endif %}
         
     {% endif %}

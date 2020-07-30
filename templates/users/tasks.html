@@ -8,7 +8,7 @@
         <div>
             <p>{{ task.category }} | {{ task.price}}</p>
             <p>{{ task.description }}</p>
-            <form action="{% url 'task-delete' task.id %}" method="POST">
+            <form action="{% url 'user:task-delete' task.id %}" method="POST">
                 {% csrf_token %}
                 <button type="submit">Delete</button>
             </form>

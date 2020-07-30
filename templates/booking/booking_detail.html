@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Booking Details</h1>
+    {{ booking }}
+
+    {% if request.user.is_seeker %}
+        {% if booking.completed is False %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="submit">
+        </form>
+        {% endif %}
+    {% endif %}
+    
+{% endblock %}

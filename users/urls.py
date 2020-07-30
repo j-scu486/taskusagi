@@ -1,6 +1,7 @@
 from django.urls import path
-
 from .views import SignUpView, SeekerSignUpView, TaskerSignUpView, edit_profile, tasks, task_delete, dashboard, tasker_schedule,tasker_schedule_delete
+
+app_name = 'user'
 
 urlpatterns = [
     path('dashboard/', dashboard, name="dashboard"), # Change login redirect to 'dashboard'
