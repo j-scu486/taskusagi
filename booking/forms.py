@@ -17,7 +17,7 @@ choices = [
 ]
 
 class ScheduleBookingComplete(forms.Form):
-    completed = forms.BooleanField(required=False)
+    completed = forms.BooleanField(required=True)
     rating = forms.ChoiceField(choices=choices)
 
 

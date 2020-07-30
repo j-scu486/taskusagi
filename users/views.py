@@ -38,7 +38,6 @@ class TaskerSignUpView(generic.CreateView):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        # Update fields as necessary, redirect to dashboard page with success message
         form = CustomUserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()

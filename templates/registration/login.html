@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<h2>Login</h2>
+<div class="login-container text-center">
+    <div class="header-icon-container">
+        <img class="header-icon" src="{% static 'taskusagi/img/rabbit.svg' %}"><span class="header-icon-task">Task</span><span class="header-icon-usagi">Usagi</span>
+    </div>
+    <form method="POST" class="form-signin">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="login-btn" type="submit">Login</button>
+    </form>
+    
+    <p>New user? Sign up <a href="{% url 'user:signup' %}">here</a></p>
+</div>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-
-<p>New user? Sign up <a href="{% url 'user:signup' %}">here</a></p>
 
 {% endblock %}

@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Rowdies:wght@700&display=swap');
+
+:root {
+    --main-text-color: rgb(166, 0, 207);
+    --main-text-hover: rgb(121, 0, 151);
+}
+
+a {
+    color: var(--main-text-color);
+}
+
+a:hover {
+    text-decoration: none;
+    color: var(--main-text-color);
+
+}
+/* NAVBAR */
+
+.navbar-header-custom {
+    font-family: 'Rowdies', cursive;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #464646;
+}
+
+.navbar-header-custom .usagi {
+    color: var(--main-text-color);
+    margin-right: 20px;
+}
+
+.navbar-header-custom:hover {
+    text-decoration: none;
+    color: #464646;
+}
+
+.navbar-header-custom .usagi:hover {
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+
+.nav-header-icon {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: var(--main-text-color);
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: var(--main-text-hover); 
+}
+
+/* BUTTONS */
+
+.navbar-expand-lg .navbar-nav .nav-link.btn-outline-primary {
+    padding: 0.5rem 1rem;
+}
+.btn-outline-primary {
+    border-color: var(--main-text-color);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--main-text-color);
+}
+
+.navbar-light .navbar-nav .nav-link.btn-outline-primary:hover {
+    color: #ffffff;
+}
+
+.btn:focus, .btn:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+.tasks-link {
+    background-color: #fff;
+    border: 1px solid var(--main-text-color);
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    transition: background-color .25s;
+    margin: 0 10px;
+}
+
+.tasks-link:hover {
+    color: #fff;
+    background-color: var(--main-text-color);
+}
+
+
+  /* LOGIN */
+
+.header-icon-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-icon {
+    height: 100px;
+    margin-right: 10px;
+}
+
+.header-icon-task {
+    font-family: 'Rowdies', cursive;
+    font-size: 2.5rem;
+}
+
+.header-icon-usagi {
+    font-family: 'Rowdies', cursive;
+    font-size: 2.5rem;
+    color: var(--main-text-color)
+}
+
+.form-signin {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 60%;
+    
+}
+
+.form-signin button.login-btn{
+    width: 300px;
+    display: block;
+    margin: 25px auto;
+    outline: none;
+    border: none;
+    color: #fff;
+    font-weight: 900;
+    background-color: var(--main-text-color);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    transition: background-color 1s;
+}
+
+.form-signin button.login-btn:hover {
+    background-color: var(--main-text-hover);
+}
+
+.login-container {
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    height: 80vh;
+}
+
+/* DASHBOARD */
+
+.dashboard-tasks-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 100vh;
+}
+
+/* FOOTER */
+
+.page-footer {
+    background-color: rgb(103, 99, 136);
+    color: #fff;
+}
+
+.page-footer a {
+    color: #fff;
+    font-size: 1.25rem;
+}
+
+.footer-header {
+    font-family: 'Rowdies', cursive;
+}
+

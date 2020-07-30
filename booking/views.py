@@ -22,10 +22,9 @@ def booking_detail(request, id):
             rating_count = r.incr('tasker:{}:recom_count'.format(booking.tasker.user.id))
             rating = r.incr('tasker:{}:recom_total'.format(booking.tasker.user.id), amount=form_rating)
             
-            if booking.completed:
-                tasker = Tasker.objects.get(user=booking.tasker.user.id)
-                tasker.rating = (rating / rating_count)
-                tasker.save()
+            tasker = Tasker.objects.get(user=booking.tasker.user.id)
+            tasker.rating = (rating / rating_count)
+            tasker.save()
             
             messages.add_message(request, messages.SUCCESS, 'Thanks for reviewing your tasker!')
             return redirect(reverse('booking:booking-list', kwargs={'_id': request.user.id}))
@@ -35,8 +34,6 @@ def booking_detail(request, id):
     return render(request, 'booking/booking_detail.html', {'booking': booking, 'form': form})
 
 def booking_list(request, _id):
-    # View all scheduled bookings (listview)
-    # View changes depending if its a seeker or tasker
     bookings = None
 
     if request.user.is_tasker:

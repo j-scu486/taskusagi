@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h1>HOME PAGE</h1>
 
     <!-- If the user is a tasker... -->
-    {% if user.is_tasker %}
+    <div class="container">
+        {% if user.is_tasker %}
         <h2>Welcome back, {{ user.first_name }}</h2>
         <div class="upcoming-jobs">
             {% if upcoming_tasks %}
@@ -25,12 +26,17 @@
 
     <!-- If the user is a seeker... -->
     {% if user.is_seeker%}
-        <h2>Whats your next task?</h2>
-        {% for category in categories %}
-            <p>
-                <a href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
-            </p>
-        {% endfor %}
+    <div class="dashboard-tasks-container">
+        <h2 class="text-center mb-5">Whats your next task?</h2>
+            <div class="dashboard-tasks-links">
+                {% for category in categories %}
+                    <a class="tasks-link" href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+
     {% endif %}
+    </div>
+ 
 
 {% endblock %}
