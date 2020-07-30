@@ -5,6 +5,7 @@
     --main-text-hover: rgb(121, 0, 151);
 }
 
+
 a {
     color: var(--main-text-color);
 }
@@ -150,13 +151,25 @@ a:hover {
 
 /* DASHBOARD */
 
-.dashboard-tasks-container {
+#dashboard .dashboard-tasks-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     height: 100vh;
+}
+
+#dashboard .dashboard-tasks-links {
+    /* media stack to column */
+}
+
+#dashboard .image-container {
+    margin-top: 50px;
+}
+
+#dashboard .dashboard-tool {
+    height: 250px;
 }
 
 /* FOOTER */

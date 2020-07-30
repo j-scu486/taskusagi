@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-
+<section id="dashboard">
     <!-- If the user is a tasker... -->
     <div class="container">
         {% if user.is_tasker %}
@@ -33,10 +33,14 @@
                     <a class="tasks-link" href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
                 {% endfor %}
             </div>
+            <div class="image-container">
+                <img class="dashboard-tool" src="{% static 'taskusagi/img/tool.svg' %}" alt="">
+            </div>
         </div>
 
     {% endif %}
     </div>
  
+</section>
 
 {% endblock %}
