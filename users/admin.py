@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext, gettext_lazy as _
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import Tasker, TaskSeeker, TaskCanDo, Schedule
+from .models import Tasker, TaskSeeker, TaskCanDo, Schedule, ToDo
 
 CustomUser = get_user_model()
 
@@ -36,3 +36,4 @@ admin.site.register(Tasker)
 admin.site.register(TaskSeeker)
 admin.site.register(Schedule)
 admin.site.register(TaskCanDo)
+admin.site.register(ToDo)

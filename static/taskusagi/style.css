@@ -15,6 +15,42 @@ a:hover {
     color: var(--main-text-color);
 
 }
+
+p {
+    margin: 0;
+}
+
+body {
+    background-color: rgb(252, 252, 252);
+}
+
+/* MY COMPONENTS */
+
+.card-custom {
+    border: 1px solid rgb(211, 211, 211);
+    background-color: rgb(250, 250, 250);
+    border-radius: 5px;
+    padding: 1rem;
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-areas: 
+        "picture-container info-1 info-1"
+        "picture-container info-2 info-2"
+    ;
+    margin: 20px 0;
+}
+
+@media (max-width: 576px) { 
+    .card-custom {
+        grid-template-areas: 
+            "picture"
+            "info-1"
+            "info-2"
+        ;
+    }
+}
+
+
 /* NAVBAR */
 
 .navbar-header-custom {
@@ -74,16 +110,30 @@ a:hover {
     box-shadow: none !important;
   }
 
-.tasks-link {
+.btn-custom-1 {
     background-color: #fff;
     border: 1px solid var(--main-text-color);
     border-radius: 5px;
     padding: .5rem 1rem;
     transition: background-color .25s;
     margin: 0 10px;
+    color: var(--main-text-color)
 }
 
-.tasks-link:hover {
+.btn-custom-2 {
+    display: block;
+    border: none;
+    background-color: var(--main-text-color);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.btn-custom-2:hover {
+    color: #fff;
+}
+
+.btn-custom-1:hover {
     color: #fff;
     background-color: var(--main-text-color);
 }
@@ -157,7 +207,14 @@ a:hover {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    height: 100vh;
+}
+
+#dashboard .next-task-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 100px 0;
 }
 
 #dashboard .dashboard-tasks-links {
@@ -172,6 +229,52 @@ a:hover {
     height: 250px;
 }
 
+#dashboard .todo-container {
+    margin: 25px 0;
+}
+
+#dashboard .todo-header {
+    margin: 25px 0;
+}
+
+#id_todo {
+    margin-top: 20px;
+}
+
+#dashboard .todo-submit {
+    margin-left: 15px;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    background-color: var(--main-text-color);
+    font-weight: 900;
+}
+
+#dashboard .todo-delete {
+    margin-left: 15px;
+    border: none;
+    color: #fff;
+    border-radius: 20px;
+    background-color: rgb(252, 99, 99);
+    font-weight: 900; 
+}
+
+#dashboard .todo-submit-container {
+    display: flex;
+}
+
+#dashboard .todo-item {
+    border: 1px solid rgb(221, 221, 221);
+    padding: .25rem .5rem;
+    border-radius: 10px;
+    width: 100%;
+}
+
+#dashboard .todo-item-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
 /* FOOTER */
 
 .page-footer {
@@ -188,3 +291,51 @@ a:hover {
     font-family: 'Rowdies', cursive;
 }
 
+/* BOOKING SEARCH */
+
+#booking-search .picture {
+    grid-area: picture;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#booking-search .picture-container {
+    grid-area: picture-container;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+#booking-search .profile-image{
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+    margin: 7px 0 0 5px;
+    float: left;
+    background-size: cover;
+    background-position: center center;
+}
+
+#booking-search .info-1 {
+    grid-area: info-1;
+    display: flex;
+    justify-content: space-between;
+}
+
+#booking-search .info-1 ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+
+#booking-search .info-2 {
+    grid-area: info-2;
+}

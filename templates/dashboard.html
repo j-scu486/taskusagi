@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <section id="dashboard">
@@ -27,14 +28,70 @@
     <!-- If the user is a seeker... -->
     {% if user.is_seeker%}
     <div class="dashboard-tasks-container">
-        <h2 class="text-center mb-5">Whats your next task?</h2>
+        <div class="next-task-container">
+        <h2 class="text-center mb-5 mt-5">What's your next task?</h2>
             <div class="dashboard-tasks-links">
                 {% for category in categories %}
-                    <a class="tasks-link" href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
+                    <a class="btn-custom-1" href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
                 {% endfor %}
             </div>
             <div class="image-container">
                 <img class="dashboard-tool" src="{% static 'taskusagi/img/tool.svg' %}" alt="">
+            </div>
+        </div>
+
+            <div class="todo-container">
+                <h2 class="todo-header">What else is on your to-do list?</h2>
+                {% for todo in todo_list %}
+                <div class="todo-item-container">
+                    <p class="todo-item">
+                        {{ todo.todo }}
+                    </p> 
+                    <form action="{% url 'user:todo-delete' todo.id %}" method="POST" >
+                        {% csrf_token %}
+                        <input type="submit" class="todo-delete" value="x" class="todo-delete">
+                    </form>
+                </div>
+
+
+                {% endfor %}
+                <div class="todo-submit-container">
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="+" class="todo-submit">
+                    </form>
+                </div>
+
+            </div>
+            <div class="tasker-card-container">
+                <h2 class="mt-5 mb-5">Recommended taskers for you</h2>
+                <div class="card-group">
+                    <div class="card mb-5">
+                      <img class="card-img-top" src="..." alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                    </div>
+                    <div class="card mb-5">
+                      <img class="card-img-top" src="..." alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                    </div>
+                    <div class="card mb-5">
+                      <img class="card-img-top" src="..." alt="Card image cap">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                      </div>
+                    </div>
+                  </div>
             </div>
         </div>
 
@@ -44,3 +101,4 @@
 </section>
 
 {% endblock %}
+

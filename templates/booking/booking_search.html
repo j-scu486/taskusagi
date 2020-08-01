@@ -1,16 +1,59 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section id="booking-search">
+<div class="container">
     <h2>Find {{ category_name|lower }} services in your area today!</h2>  
-    <form method="GET">
-        <select name="price" id="price">
-            <option value="high">Price: Highest</option>
-            <option value="low">Price: Lowest</option>
-        </select>
-        <button type="submit">Sort</button>
-    </form>  
-    {% for result in results %}
-        <p>{{result.tasker }} -- ￥{{ result.price }} Rating: {{ result.tasker.rating }}</p><a href="{% url 'booking:schedule-booking' _id=result.tasker.user.id category=result.category %}">Book</a>
-        
-    {% endfor %}
+    <div class="row">
+        <div class="search-form col-md-4">
+            <form method="GET">
+                <select name="price" id="price">
+                    <option value="high">Price: Highest</option>
+                    <option value="low">Price: Lowest</option>
+                </select>
+                <button type="submit">Sort</button>
+            </form>  
+        </div>
+        <div class="search-taskers col-md-8">
+            {% for result in results %}
+            <div class="card-custom">
+                <div class="picture-container">
+                    <div class="picture">
+                        <div class="profile-image" style="background-image: url({{ result.tasker.user.profile_picture.url }})"></div>
+                        <a href="" class="mt-4 mb-4">View Profile & Reviews</a>
+                        <a href="{% url 'booking:schedule-booking' _id=result.tasker.user.id category=result.category %}" class="btn-custom-2">Select & Continue</a>
+                    </div>
+                </div>
+                <div class="info-1">
+                   <div class="info-container">
+                       <h2>{{ result.tasker }}</h2>
+                       <ul>
+                           <li>Test1</li>
+                           <li>Test1</li>
+
+                           <li>Test1</li>
+                           <li>Test1</li>
+
+                       </ul>
+                   </div>
+                   <div class="info-price">
+                        <h3>￥{{ result.price }} /hr</h3>
+                   </div>
+                </div>
+                <div class="info-2">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ut natus eveniet officiis eius molestias esse maxime atque perspiciatis repellendus!</p>
+                    <p>lorem150</p>
+                </div>
+                <!-- <p>{{result.tasker }} -- ￥{{ result.price }} Rating: {{ result.tasker.rating }}</p><a href="{% url 'booking:schedule-booking' _id=result.tasker.user.id category=result.category %}">Book</a> -->
+
+            </div>
+
+        {% endfor %}
+        </div>
+    </div>
+
+
+</div>
+</section>
+
 {% endblock %}

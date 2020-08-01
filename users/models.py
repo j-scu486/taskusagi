@@ -41,6 +41,13 @@ class Tasker(models.Model):
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)
 
+class ToDo(models.Model):
+    seeker = models.ForeignKey('TaskSeeker', on_delete=models.CASCADE)
+    todo = models.CharField(max_length=150)
+
+    def __str__(self):
+        return '{} : {}'.format(self.seeker, self.todo)
+
 class Schedule(models.Model):
 
     MONDAY = 'MON'

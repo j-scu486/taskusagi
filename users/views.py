@@ -9,8 +9,8 @@ from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
 from datetime import datetime
 
-from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm
-from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule
+from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm, ToDoForm
+from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule, ToDo
 from booking.models import ScheduleBooking
 from .decorators import seeker_required, tasker_required
 
@@ -110,13 +110,43 @@ def tasker_schedule_delete(request, _id):
     return redirect('user:tasker-schedule')
 
 @login_required
-def dashboard(request):
+def dashboard(request, todo_id=None):
     categories = TaskCanDo.TASK_CHOICES
     upcoming_tasks = None
     month_earnings = None
+    todo_list = None
+    form = None
 
     if request.user.is_tasker:
-        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.id, booking__contains=datetime.today().strftime("%Y-%m-%d")).order_by('booking')[:3]
+        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, booking__contains=datetime.today().strftime("%Y-%m-%d")).order_by('booking')[:3]
         month_earnings = ScheduleBooking.get_month_earnings()
+
+    if request.user.is_seeker:
+        if request.method == 'POST':
+            form = ToDoForm(request.POST)
+            if form.is_valid():
+                ToDo.objects.create(
+                    seeker=request.user.taskseeker,
+                    todo=form.cleaned_data['todo']
+                )
+                return redirect('user:dashboard')
+        else:
+            if todo_id:
+                edit_todo = ToDo.objects.get(id=todo_id)
+                form = ToDoForm(instance=edit_todo)
+            else:
+                form = ToDoForm()
+
+        todo_list = ToDo.objects.filter(seeker=request.user.taskseeker)
         
-    return render(request, 'dashboard.html', {'categories': categories, 'upcoming_tasks': upcoming_tasks, 'month_earnings': month_earnings})
+    return render(request, 'dashboard.html', {'categories': categories, 'upcoming_tasks': upcoming_tasks, 'month_earnings': month_earnings, 'form': form, 'todo_list': todo_list})
+
+@login_required
+def todo_delete(request, id):
+    obj = ToDo.objects.get(id=id, seeker=request.user.taskseeker)
+    print(obj)
+
+    if request.method == 'POST':
+        obj.delete()
+
+    return redirect('user:dashboard')

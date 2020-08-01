@@ -21,6 +21,7 @@ def booking_detail(request, id):
             form_rating = form.cleaned_data['rating']
             rating_count = r.incr('tasker:{}:recom_count'.format(booking.tasker.user.id))
             rating = r.incr('tasker:{}:recom_total'.format(booking.tasker.user.id), amount=form_rating)
+            r.incr('tasker:{}:completed_tasks'.format(booking.tasker.user.id))
             
             tasker = Tasker.objects.get(user=booking.tasker.user.id)
             tasker.rating = (rating / rating_count)

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     # Local
     'users.apps.UsersConfig',
-    'booking.apps.BookingConfig'
+    'booking.apps.BookingConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +138,5 @@ LOGOUT_REDIRECT_URL = 'login'
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 0
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

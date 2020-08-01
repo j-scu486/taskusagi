@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Tasker, TaskSeeker, TaskCanDo, Schedule
-from django.forms import ModelForm
+from django import forms
 from django.core.exceptions import ValidationError
 
 from django.core.validators import RegexValidator
@@ -56,7 +56,7 @@ class SeekerSignUpForm(UserCreationForm):
         TaskSeeker.objects.create(user=user)
         return user
 
-class TaskCreateForm(ModelForm):
+class TaskCreateForm(forms.ModelForm):
     
     class Meta:
         model = TaskCanDo
@@ -67,13 +67,13 @@ class TaskCreateForm(ModelForm):
     # def clean_category(self):
     #     data = self.cleaned_data['category']
 
-class TaskDeleteForm(ModelForm):
+class TaskDeleteForm(forms.ModelForm):
 
     class Meta:
         model = TaskCanDo
         fields = []
 
-class ScheduleCreateForm(ModelForm):
+class ScheduleCreateForm(forms.ModelForm):
 
     class Meta:
         model = Schedule
@@ -102,3 +102,6 @@ class ScheduleCreateForm(ModelForm):
             raise ValidationError('You can only have one time slot for each day')
 
         return day
+
+class ToDoForm(forms.Form):
+    todo = forms.CharField(label="", max_length=150)
