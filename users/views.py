@@ -38,7 +38,7 @@ class TaskerSignUpView(generic.CreateView):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = CustomUserChangeForm(request.POST, instance=request.user)
+        form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, 'Profile updated!')

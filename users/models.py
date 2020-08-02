@@ -37,6 +37,7 @@ class TaskSeeker(models.Model):
 class Tasker(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)
     rating = models.DecimalField(max_digits=3, decimal_places=2, default=0.00)
+    completed = models.IntegerField()
 
     def __str__(self):
         return '{} {}'.format(self.user.first_name, self.user.last_name)

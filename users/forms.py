@@ -17,7 +17,7 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm):
         
         model = get_user_model()
-        fields = ('username', 'email', 'address', 'language', 'nationality', 'bio', 'profile_picture', 'phone_num')
+        fields = ('username', 'first_name', 'last_name', 'email', 'address', 'language', 'nationality', 'bio', 'profile_picture', 'phone_num')
 
     def clean_phone_num(self):
         phone_num = self.cleaned_data['phone_num']

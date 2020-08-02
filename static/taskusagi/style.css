@@ -32,7 +32,7 @@ body {
     border-radius: 5px;
     padding: 1rem;
     display: grid;
-    grid-gap: 1rem;
+    grid-gap: 2rem;
     grid-template-areas: 
         "picture-container info-1 info-1"
         "picture-container info-2 info-2"
@@ -43,7 +43,7 @@ body {
 @media (max-width: 576px) { 
     .card-custom {
         grid-template-areas: 
-            "picture"
+            "picture-container"
             "info-1"
             "info-2"
         ;

@@ -28,12 +28,8 @@
                    <div class="info-container">
                        <h2>{{ result.tasker }}</h2>
                        <ul>
-                           <li>Test1</li>
-                           <li>Test1</li>
-
-                           <li>Test1</li>
-                           <li>Test1</li>
-
+                           <li><i class="far fa-star"></i> {{ result.tasker.rating }} / 5 positive rating</li>
+                           <li><i class="far fa-check-circle"></i> {{ result.tasker.completed }} tasks successfully completed</li>
                        </ul>
                    </div>
                    <div class="info-price">
@@ -41,8 +37,7 @@
                    </div>
                 </div>
                 <div class="info-2">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum ut natus eveniet officiis eius molestias esse maxime atque perspiciatis repellendus!</p>
-                    <p>lorem150</p>
+                    <p>{{ result.tasker.user.bio }}</p>
                 </div>
                 <!-- <p>{{result.tasker }} -- ￥{{ result.price }} Rating: {{ result.tasker.rating }}</p><a href="{% url 'booking:schedule-booking' _id=result.tasker.user.id category=result.category %}">Book</a> -->
 

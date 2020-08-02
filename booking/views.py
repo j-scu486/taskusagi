@@ -25,6 +25,7 @@ def booking_detail(request, id):
             
             tasker = Tasker.objects.get(user=booking.tasker.user.id)
             tasker.rating = (rating / rating_count)
+            tasker.completed += 1
             tasker.save()
             
             messages.add_message(request, messages.SUCCESS, 'Thanks for reviewing your tasker!')
