@@ -39,3 +39,25 @@ class ScheduleBooking(models.Model):
 
     def __str__(self):
         return 'Tasker: {}, Seeker: {}, Booking: {}'.format(self.tasker, self.seeker, self.booking)
+
+REVIEW_CHOICES = [
+    ('1', 1),
+    ('2', 2),
+    ('3', 3),
+    ('4', 4),
+    ('5', 5)
+]
+
+class ScheduleBookingReview(models.Model):
+    schedule = models.ForeignKey('ScheduleBooking', on_delete=models.CASCADE)
+    review = models.TextField(max_length=200)
+    created = models.DateTimeField(auto_now_add=True)
+    completed = models.BooleanField(default=False)
+    rating = models.CharField(
+        max_length=1,
+        choices=REVIEW_CHOICES,
+        default=3
+    )
+
+    def __str__(self):
+        return 'Schedule Review: {}, Rating: {}'.format(self.schedule, self.rating)

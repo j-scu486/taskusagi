@@ -8,10 +8,12 @@ class CustomUser(AbstractUser):
 
     JAPANESE = 'JP'
     ENGLISH = 'EN'
+    ENG_JP = 'JE'
 
     LANGUAGE_CHOICES = [
         (JAPANESE, 'Japanese'),
         (ENGLISH, 'English'),
+        (ENG_JP, 'English / Japanese')
     ]
     
     address = models.CharField(max_length=100)
@@ -27,6 +29,10 @@ class CustomUser(AbstractUser):
     is_tasker = models.BooleanField(default=False)
     is_seeker = models.BooleanField(default=False)
     # Notifications to be added later
+
+    @property
+    def get_language(self):
+        return self.get_language_display()
     
 class TaskSeeker(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, primary_key=True)

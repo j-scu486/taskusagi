@@ -5,24 +5,29 @@ from django.urls import reverse
 
 from users.models import Schedule, TaskCanDo, Tasker, TaskSeeker
 from users.decorators import seeker_required, tasker_required
-from booking.models import ScheduleBooking
-from booking.forms import ScheduleBookingForm, ScheduleBookingComplete
+from booking.models import ScheduleBooking, ScheduleBookingReview
+from booking.forms import ScheduleBookingForm, ScheduleBookingReviewForm
 from .ratings import r
 
 def booking_detail(request, id):
     booking = ScheduleBooking.objects.get(id=id)
 
     if request.method == 'POST':
-        form = ScheduleBookingComplete(request.POST)
+        form = ScheduleBookingReviewForm(request.POST)
         if form.is_valid():
-            booking.completed = form.cleaned_data['completed']
+            booking_review = form.save(commit=False)
+            booking_review.schedule = booking
+            booking.completed = True
             booking.save()
+            booking_review.save()
 
+            # Update redis 
             form_rating = form.cleaned_data['rating']
             rating_count = r.incr('tasker:{}:recom_count'.format(booking.tasker.user.id))
             rating = r.incr('tasker:{}:recom_total'.format(booking.tasker.user.id), amount=form_rating)
             r.incr('tasker:{}:completed_tasks'.format(booking.tasker.user.id))
             
+            # Calculate and set tasker review rating and add to completed tasks
             tasker = Tasker.objects.get(user=booking.tasker.user.id)
             tasker.rating = (rating / rating_count)
             tasker.completed += 1
@@ -31,7 +36,7 @@ def booking_detail(request, id):
             messages.add_message(request, messages.SUCCESS, 'Thanks for reviewing your tasker!')
             return redirect(reverse('booking:booking-list', kwargs={'_id': request.user.id}))
     else:
-        form = ScheduleBookingComplete
+        form = ScheduleBookingReviewForm
 
     return render(request, 'booking/booking_detail.html', {'booking': booking, 'form': form})
 
@@ -112,3 +117,9 @@ def available_times_ajax(request, _id, category):
     }
 
     return JsonResponse(data)
+
+def tasker_reviews_ajax(request, _id):
+    reviews = ScheduleBookingReview.objects.filter(schedule__tasker__user=_id)
+    data = list(reviews.values())
+
+    return JsonResponse({'data': data, 'user_id': _id })

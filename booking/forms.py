@@ -1,5 +1,5 @@
 from django import forms
-from .models import ScheduleBooking
+from .models import ScheduleBooking, ScheduleBookingReview
 
 class ScheduleBookingForm(forms.ModelForm):
     booking = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M'])
@@ -8,16 +8,15 @@ class ScheduleBookingForm(forms.ModelForm):
         model = ScheduleBooking
         fields = ['booking', 'notes',]
 
-choices = [
-    ('1', 1),
-    ('2', 2),
-    ('3', 3),
-    ('4', 4),
-    ('5', 5)
-]
+class ScheduleBookingReviewForm(forms.ModelForm):
 
-class ScheduleBookingComplete(forms.Form):
-    completed = forms.BooleanField(required=True)
-    rating = forms.ChoiceField(choices=choices)
+    class Meta:
+        model = ScheduleBookingReview
+        fields = ['review', 'completed', 'rating']
 
+    def clean_completed(self):
+        completed = self.cleaned_data['completed']
+        if completed is False:
+            raise forms.ValidationError('Please mark this schedule as completed in order to leave a review')
 
+        return completed
