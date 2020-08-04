@@ -3,6 +3,7 @@
 :root {
     --main-text-color: rgb(166, 0, 207);
     --main-text-hover: rgb(121, 0, 151);
+    --card-outline: rgb(211, 211, 211);
 }
 
 
@@ -27,7 +28,7 @@ body {
 /* MY COMPONENTS */
 
 .card-custom {
-    border: 1px solid rgb(211, 211, 211);
+    border: 1px solid var(--card-outline);
     background-color: rgb(250, 250, 250);
     border-radius: 5px;
     padding: 1rem;
@@ -338,4 +339,30 @@ body {
 
 #booking-search .info-2 {
     grid-area: info-2;
+}
+
+#booking-search .search-form-container {
+    margin-top: 1rem;
+}
+
+#booking-search .search-form-item {
+    border: 1px solid var(--card-outline);
+    border-radius: 5px;
+    padding: 1rem;
+    margin: 10px 0;
+
+}
+
+#booking-search .search-item-header {
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 10px;
+}
+
+#booking-search .search-form-radio {
+    margin-top: 10px;
+}
+
+#booking-search .search-form-control {
+    display: block;
 }

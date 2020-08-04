@@ -8,6 +8,7 @@ from users.decorators import seeker_required, tasker_required
 from booking.models import ScheduleBooking, ScheduleBookingReview
 from booking.forms import ScheduleBookingForm, ScheduleBookingReviewForm
 from .ratings import r
+import datetime
 
 def booking_detail(request, id):
     booking = ScheduleBooking.objects.get(id=id)
@@ -55,9 +56,29 @@ def booking_list(request, _id):
 def booking_search(request, category):
     results = TaskCanDo.objects.filter(category=category)
     category_name = results[0].catagory_display() if results else None
-
+    time_pref = request.GET.get('task-time')
     price = request.GET.get('price')
+
+    time_morning_1 = datetime.time(9,0,0)
+    time_morning_2 = datetime.time(12,0,0)
+
+    time_afternoon_1 = datetime.time(12,0,0)
+    time_afternoon_2 = datetime.time(17,0,0)
+
+    time_evening_1 = datetime.time(15,0,0)
+    time_evening_2 = datetime.time(20,0,0)
+
+    if time_pref == 'morning':
+        results = results.filter(tasker__schedule__start_time__range=(time_morning_1, time_morning_2)).distinct()
+    elif time_pref == 'afternoon':
+        results = results.filter(tasker__schedule__start_time__range=(time_afternoon_1, time_afternoon_2)).distinct()
+    elif time_pref == 'evening':
+        results = results.filter(tasker__schedule__start_time__range=(time_evening_1, time_evening_2)).distinct()
+    else:
+        pass
+
     results = results.order_by('-price') if price == 'high' else results.order_by('price')
+
 
     return render(request, 'booking/booking_search.html', {'results': results, 'category_name': category_name})
 

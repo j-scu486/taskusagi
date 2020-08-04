@@ -7,11 +7,35 @@
     <div class="row">
         <div class="search-form col-md-4">
             <form method="GET">
-                <select name="price" id="price">
-                    <option value="high">Price: Highest</option>
-                    <option value="low">Price: Lowest</option>
-                </select>
-                <button type="submit">Sort</button>
+                <div class="search-form-container">
+                    <div class="search-form-item"> 
+                        <i class="fas fa-dollar-sign fa-lg"></i><span class="search-item-header">price</span>
+                        <select class="form-control" name="price" id="price" style="margin-top: 10px;">
+                            <option value="high">Price: Highest</option>
+                            <option value="low">Price: Lowest</option>
+                        </select>
+                    </div>
+                    <div class="search-form-item"> 
+                        <i class="far fa-clock fa-lg"></i><span class="search-item-header">task time</span>
+                        <div class="search-form-radio">
+                            <div class="search-form-control">
+                                <input type="radio" name="task-time" id="morning" value="morning">
+                                <label for="morning">Morning (8am - 12pm)</label>
+                            </div>
+                            <div class="search-form-control">
+                                <input type="radio" name="task-time" id="afternoon" value="afternoon">
+                                <label for="afternoon">Afternoon (12pm - 5pm)</label>
+                            </div>
+                            <div class="search-form-control">
+                                <input type="radio" name="task-time" id="evening" value="evening">
+                                <label for="evening">Evening (5pm - 9:30pm)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-custom-1" style="width: 100%; margin: 10px 0 10px 0;">Sort</button>
+                </div>
+
             </form>  
         </div>
         <div class="search-taskers col-md-8">
@@ -104,7 +128,6 @@ const ratingFunc = function(rating) {
 }
 
 myModalLink.forEach(modal => {
-
         fetch(`ajax/reviews/${modal.dataset.id}/`)
             .then(response => response.json())
             .then(data => {
