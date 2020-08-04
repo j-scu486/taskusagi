@@ -85,22 +85,46 @@
 
 <script>
 
+
+$(function () {
+
 myModalLink = document.querySelectorAll('.my-modal');
 allModals = document.querySelectorAll('.modal-info-item')
+
+const ratingFunc = function(rating) {
+    toNum = parseInt(rating);
+    star_template = '<i class="fas fa-star" style="color: orange;"></i>';
+    star_total = ''
+
+    for(let i = 0; i <= rating - 1; i++) {
+        star_total += star_template
+    }
+
+    return star_total
+}
 
 myModalLink.forEach(modal => {
 
         fetch(`ajax/reviews/${modal.dataset.id}/`)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 allModals.forEach(e => {
                     if(parseInt(e.dataset.id) === data['user_id']) {
                         data['data'].forEach(review => {
                             e.innerHTML += `
-                            <div>${review.rating}</div>
-                            <div>${review.review}</div>
-
-
+                            <div class="review-container" style="display: flex; align-items: center;">
+                                <div class="review-item">
+                                    <div class="profile-image" style="background-image: url(${review.profile_url}); margin-right: 20px"></div>
+                                </div>
+                                <div class="review-item">
+                                    <div>${ratingFunc(review.rating)}</div>                                    
+                                    <div style="margin-top: 5px;">"${review.review}"</div>
+                                    <div style="font-size: 0.8rem; color: grey; margin-top: 5px;">${review.seeker}, ${review.created}</div>
+                                </div>
+                                <br>
+                                <hr>
+                            </div>
                             `
                         })
                     }
@@ -108,7 +132,7 @@ myModalLink.forEach(modal => {
             })
 })
 
-
+})
 
 </script>
 {% endblock %}

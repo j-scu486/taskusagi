@@ -119,7 +119,25 @@ def available_times_ajax(request, _id, category):
     return JsonResponse(data)
 
 def tasker_reviews_ajax(request, _id):
-    reviews = ScheduleBookingReview.objects.filter(schedule__tasker__user=_id)
-    data = list(reviews.values())
+    reviews = ScheduleBookingReview.objects.filter(schedule__tasker__user=_id)[:5]
+    data = []
 
+    for review in reviews:
+        seeker = TaskSeeker.objects.get(user_id=review.schedule.seeker.user.id)
+        picture = None
+
+        try:
+            picture = seeker.user.profile_picture.url
+        except ValueError:
+            picture = 'https://lh3.googleusercontent.com/proxy/1Ns5bl_A4oo3EiBoDQRXYoBQp8CwKzUPztOH-1LoQ1Y9Fq_Kh_MAWAPVHPM0ohlT4qPxuDAxYJRjkdloaqluDRs28c4DTzZKUlNH3XY'
+            
+        data.append({
+            'id': review.id,
+            'review': review.review,
+            'created': review.created.strftime("%B %w, %Y"),
+            'rating': review.rating,
+            'seeker': seeker.user.first_name,
+            'profile_url': picture
+        })
+    
     return JsonResponse({'data': data, 'user_id': _id })
