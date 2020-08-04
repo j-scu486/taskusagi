@@ -16,12 +16,13 @@
             <div class="form-row justify-content-center my-5">
                 <div class="form-group col-md6 mx-5">
                     {{ form.booking|as_crispy_field }}
+                    <span id="booking-conf"></span>
                 </div>
                 <div class="form-group col-md6">
                     {{ form.notes|as_crispy_field }}
                 </div>
             </div>
-            <input type="submit" value="submit" class="btn-custom-2" style="text-transform: uppercase; font-weight: 900; margin: 10px auto;">
+            <input type="submit" value="Select and continue" class="btn-custom-2" style="font-weight: 900; margin: 10px auto;">
         
         </form>
     </div>
@@ -41,7 +42,7 @@
         // When a user clicks on a date, a check aginst the JSON obj will be done
         // If a schedule is found, allowTimes will be set based on the result of the check
         // Else, it is just the regular time schedule
-
+        const confirmation = document.getElementById('booking-conf');
         var bookingsObj = {};
         var datePickerTime = function(currentDateTime) {
             let day = (currentDateTime.getUTCDate()).toString().padStart(2,0);
@@ -52,6 +53,12 @@
             let allowTimesArray = null
             let bookedArray = null
             const dummyThis = this
+
+            let monthFull = currentDateTime.toLocaleString('default', { month: 'short' });
+            let timeH = currentDateTime.getHours();
+            let timeM = currentDateTime.getMinutes().toString().padStart(2,0);
+
+            confirmation.innerHTML = `<p style="font-size: 1.25rem;">Request for: <strong>${monthFull} ${day}, ${timeH}:${timeM}</strong></p>`
 
             $.ajax({
                 url: 'ajax/booking',
