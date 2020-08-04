@@ -79,7 +79,6 @@ def booking_search(request, category):
 
     results = results.order_by('-price') if price == 'high' else results.order_by('price')
 
-
     return render(request, 'booking/booking_search.html', {'results': results, 'category_name': category_name})
 
 def schedule_booking(request, _id, category):
