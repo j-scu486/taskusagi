@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section id="tasker-profile">
+    <div class="container">
+        <h1 class="mt-5">{{ tasker }}'s profile </h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card-custom-2">
+                    <div class="info-1">
+                       <div class="info-container">
+                           <h2 style="text-align: center;">{{ tasker }}</h2>
+                           <div class="picture-container" style="margin: 1rem 0;">
+                            <div class="picture">
+                                <div class="profile-image" style="background-image: url({{ tasker.user.profile_picture.url }})"></div>
+                            </div>
+                        </div>
+                           <ul>
+                               <li><i class="far fa-star"></i> {{ tasker.rating }} / 5 positive rating</li>
+                               <li><i class="far fa-check-circle"></i> {{ tasker.completed }} tasks successfully completed</li>
+                               <li><i class="fas fa-language"></i> {{ tasker.user.get_language }}</li>
+                           </ul>
+                       </div>
+                    </div>
+                    <div class="info-2">
+                        <h4 class="mt-4">A bit about me...</h4>
+                        <p>{{ tasker.user.bio }}</p>
+                        <br>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-6">
+                <div class="card-custom-2">
+                    <div class="info-container">
+                        <h2>Services offered:</h2>
+                        <ul>
+                            {% for task in task_can_do %}
+                            <li><a href="{% url 'booking:schedule-booking' _id=tasker.user.id category=task.category %}">{{ task.get_category_display }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

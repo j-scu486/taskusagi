@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import SignUpView, SeekerSignUpView, TaskerSignUpView, edit_profile, tasks, task_delete, dashboard, tasker_schedule,tasker_schedule_delete,todo_delete
+from .views import SignUpView, SeekerSignUpView, TaskerSignUpView, edit_profile, tasks, task_delete, dashboard, tasker_schedule,tasker_schedule_delete,todo_delete, tasker_profile_view
 
 app_name = 'user'
 
@@ -14,5 +14,6 @@ urlpatterns = [
     path('tasker_schedule/', tasker_schedule, name='tasker-schedule'),
     path('tasker_task_delete/<int:_id>', task_delete, name='task-delete'),
     path('tasker_schedule_delete/<int:_id>', tasker_schedule_delete, name='tasker-schedule-delete'),
+    path('tasker_profile/<int:_id>', tasker_profile_view, name='tasker-profile'),
     path('todo_delete/<int:id>/', todo_delete, name='todo-delete')
 ]

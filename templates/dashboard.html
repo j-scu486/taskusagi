@@ -87,8 +87,8 @@
                     <div class="info-2">
                         <p>{{ tasker.user.bio|truncatechars:80 }}</p>
                     </div>
-                    <div class="info-3">
-                        <a href="">Link to more info</a>
+                    <div class="info-3 my-4">
+                        <a href="{% url 'user:tasker-profile' tasker.user.id %}">View tasker profile</a>
                     </div>
                 </div>
                 {% endfor %}

@@ -166,3 +166,9 @@ def todo_delete(request, id):
         obj.delete()
 
     return redirect('user:dashboard')
+
+def tasker_profile_view(request, _id):
+    tasker = Tasker.objects.filter(user=_id).first()
+    task_can_do = TaskCanDo.objects.filter(tasker__user=_id)
+
+    return render(request, 'users/tasker_profile.html', {'tasker': tasker, 'task_can_do': task_can_do})
