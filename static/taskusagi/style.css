@@ -366,3 +366,11 @@ body {
 #booking-search .search-form-control {
     display: block;
 }
+
+/* BOOKING LISTING */
+
+#booking-list td,
+#booking-list th {
+    text-align: center;
+    vertical-align: middle;
+}

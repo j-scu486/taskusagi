@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>BOOKING PAGE</h1>
+<section id="booking-list">
+<div class="container">
+    <h1 class="my-3">Your bookings</h1>
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -9,8 +11,34 @@
             {% endfor %}
         </ul>
     {% endif %}
-    {% for booking in bookings %}
-        <p>{{ booking }}</p>
-        <a href="{{ booking.get_absolute_url }}">View</a>
-    {% endfor %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tasker</th>
+                <th scope="col">Scheduled</th>
+                <th scope="col">Task Type</th>
+                <th scope="col">Completed</th>
+                <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.tasker }}</td>
+                <td>{{ booking.booking}}</td>
+                <td>{{ booking.category }}</td>
+                <td style="text-align: center; vertical-align: middle;">
+                    {% if booking.completed %}
+                    <i class="fas fa-check" style="color: green;"></i>
+                    {% endif %}
+                </td>
+                <td><a href="{{ booking.get_absolute_url }}">View</a></td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</section>
+
 {% endblock%}
