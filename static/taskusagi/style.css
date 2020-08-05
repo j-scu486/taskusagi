@@ -41,6 +41,21 @@ body {
     margin: 20px 0;
 }
 
+.profile-image{
+    width: 100px;
+    height: 100px;
+    -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+    margin: 7px 0 0 5px;
+    float: left;
+    background-size: cover;
+    background-position: center center;
+}
+
 @media (max-width: 576px) { 
     .card-custom {
         grid-template-areas: 
@@ -310,21 +325,6 @@ body {
     height: 100%;
 }
 
-#booking-search .profile-image{
-    width: 100px;
-    height: 100px;
-    -webkit-border-radius: 60px;
-    -webkit-background-clip: padding-box;
-    -moz-border-radius: 60px;
-    -moz-background-clip: padding;
-    border-radius: 60px;
-    background-clip: padding-box;
-    margin: 7px 0 0 5px;
-    float: left;
-    background-size: cover;
-    background-position: center center;
-}
-
 #booking-search .info-1 {
     grid-area: info-1;
     display: flex;
@@ -373,4 +373,20 @@ body {
 #booking-list th {
     text-align: center;
     vertical-align: middle;
+}
+
+/* BOOKING DETAIL */
+
+#booking-detail .card-custom .info-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#booking-detail .card-custom .info-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
