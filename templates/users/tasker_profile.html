@@ -7,7 +7,7 @@
         <h1 class="mt-5">{{ tasker }}'s profile </h1>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="card-custom-2">
                     <div class="info-1">
                        <div class="info-container">
@@ -31,17 +31,32 @@
                     </div>
                 </div>
             </div>
-    
-            <div class="col-md-6">
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="card-custom-2">
-                    <div class="info-container">
-                        <h2>Services offered:</h2>
-                        <ul>
+                    <h2 class="text-center">Services offered:</h2>
+                    <div class="info-container-detail">
                             {% for task in task_can_do %}
-                            <li><a href="{% url 'booking:schedule-booking' _id=tasker.user.id category=task.category %}">{{ task.get_category_display }}</a></li>
+                            <div class="info-detail-item">
+                                <div class="header-container">
+                                    <h4>{{ task.get_category_display }}</h4>
+                                    <p>{{ task.description }}</p>
+                                </div>
+                                <a class="btn-custom-1 ml-5" style="display: flex; align-items: center;" href="{% url 'booking:schedule-booking' _id=tasker.user.id category=task.category %}">Select for ￥{{ task.price }} /hr</a>
+                            </div>
+                            <hr>
                             {% endfor %}
-                        </ul>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-custom-2">
+                    <h3>Reviews</h3>
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione recusandae voluptate perspiciatis molestias aliquam ut aspernatur explicabo, vero porro laudantium fugiat tempora sapiente deserunt soluta pariatur, consequuntur omnis dolore libero repellat distinctio? Minima maiores, odit, magnam quod aliquid deserunt doloribus illo necessitatibus, non amet sequi consequuntur at qui nam inventore. Veritatis accusamus aliquid quaerat aut amet enim adipisci, quam praesentium, reprehenderit consectetur ullam. Voluptates necessitatibus, laboriosam corrupti officiis odit quia expedita minus magnam pariatur illo laudantium dolore nam velit id minima cupiditate repellendus neque nulla! Commodi deleniti ex iure quae, aperiam ea libero exercitationem soluta cumque sit voluptatum, illum dolorum?
                 </div>
             </div>
         </div>

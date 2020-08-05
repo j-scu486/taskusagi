@@ -2,6 +2,7 @@
 
 :root {
     --main-text-color: rgb(166, 0, 207);
+    --secondary-text-color: rgb(133, 133, 133);
     --main-text-hover: rgb(121, 0, 151);
     --card-outline: rgb(211, 211, 211);
 }
@@ -415,6 +416,20 @@ ul {
     justify-content: center;
 }
 
+/* TASKER PROFILE */
+
+#tasker-profile .card-custom-2 .info-container-detail {
+    display: flex;
+    flex-direction: column;
+}
+#tasker-profile .card-custom-2 .info-detail-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#tasker-profile .card-custom-2 .info-container-detail p {
+    color: var(--secondary-text-color);
+}
 
 
 
