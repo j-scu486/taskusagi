@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
-from datetime import datetime
+from datetime import datetime, timedelta
+import random
 
 from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm, ToDoForm
 from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule, ToDo
@@ -116,6 +117,15 @@ def dashboard(request, todo_id=None):
     month_earnings = None
     todo_list = None
     form = None
+    today = datetime.today()
+    days_check = datetime.today() - timedelta(days=30)
+    new_taskers = []
+
+    taskers_q = Tasker.objects.filter(user__date_joined__range=(days_check, today))
+    rand_arr = random.sample(range(0,len(taskers_q)), 3)
+    
+    for i in range(0,3):
+        new_taskers.append(taskers_q[rand_arr[i]])
 
     if request.user.is_tasker:
         upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, booking__contains=datetime.today().strftime("%Y-%m-%d")).order_by('booking')[:3]
@@ -139,7 +149,13 @@ def dashboard(request, todo_id=None):
 
         todo_list = ToDo.objects.filter(seeker=request.user.taskseeker)
         
-    return render(request, 'dashboard.html', {'categories': categories, 'upcoming_tasks': upcoming_tasks, 'month_earnings': month_earnings, 'form': form, 'todo_list': todo_list})
+    return render(request, 'dashboard.html', {'categories': categories, 
+                                                'upcoming_tasks': upcoming_tasks, 
+                                                'month_earnings': month_earnings, 
+                                                'form': form, 
+                                                'todo_list': todo_list,
+                                                'new_taskers': new_taskers
+                                                })
 
 @login_required
 def todo_delete(request, id):

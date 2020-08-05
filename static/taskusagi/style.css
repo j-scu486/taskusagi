@@ -25,6 +25,11 @@ body {
     background-color: rgb(252, 252, 252);
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
 /* MY COMPONENTS */
 
 .card-custom {
@@ -39,6 +44,23 @@ body {
         "picture-container info-2 info-2"
     ;
     margin: 20px 0;
+}
+
+.card-custom-2 {
+    border: 1px solid var(--card-outline);
+    background-color: rgb(250, 250, 250);
+    border-radius: 5px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.card-custom-2 .info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-image{
@@ -291,6 +313,14 @@ body {
     align-items: center;
     margin: 5px 0;
 }
+
+#dashboard .tasker-card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+
 /* FOOTER */
 
 .page-footer {
@@ -330,12 +360,6 @@ body {
     display: flex;
     justify-content: space-between;
 }
-
-#booking-search .info-1 ul {
-    list-style-type: none;
-    padding: 0;
-}
-
 
 #booking-search .info-2 {
     grid-area: info-2;
@@ -389,4 +413,28 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+
+
+
+/* MEDIA */
+
+
+@media (max-width: 576px) { 
+    .card-custom {
+        grid-template-areas: 
+            "picture-container"
+            "info-1"
+            "info-2"
+        ;
+    }
+
+    #dashboard .tasker-card-container {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+
+
 }

@@ -64,34 +64,34 @@
                 </div>
 
             </div>
+            <h2 class="mt-5 mb-5">Support our newest taskers!</h2>
+
             <div class="tasker-card-container">
-                <h2 class="mt-5 mb-5">Recommended taskers for you</h2>
-                <div class="card-group">
-                    <div class="card mb-5">
-                      <img class="card-img-top" src="..." alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
+                {% for tasker in new_taskers %}
+                <div class="card-custom-2">
+                    <div class="info-1">
+                       <div class="info-container">
+                           <h2 style="text-align: center;">{{ tasker }}</h2>
+                           <div class="picture-container" style="margin: 1rem 0;">
+                            <div class="picture">
+                                <div class="profile-image" style="background-image: url({{ tasker.user.profile_picture.url }})"></div>
+                            </div>
+                        </div>
+                           <ul>
+                               <li><i class="far fa-star"></i> {{ tasker.rating }} / 5 positive rating</li>
+                               <li><i class="far fa-check-circle"></i> {{ tasker.completed }} tasks successfully completed</li>
+                               <li><i class="fas fa-language"></i> {{ tasker.user.get_language }}</li>
+                           </ul>
+                       </div>
                     </div>
-                    <div class="card mb-5">
-                      <img class="card-img-top" src="..." alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
+                    <div class="info-2">
+                        <p>{{ tasker.user.bio|truncatechars:80 }}</p>
                     </div>
-                    <div class="card mb-5">
-                      <img class="card-img-top" src="..." alt="Card image cap">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
+                    <div class="info-3">
+                        <a href="">Link to more info</a>
                     </div>
-                  </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
 
