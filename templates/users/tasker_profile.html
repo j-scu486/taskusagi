@@ -54,13 +54,50 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="card-custom-2">
-                    <h3>Reviews</h3>
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ratione recusandae voluptate perspiciatis molestias aliquam ut aspernatur explicabo, vero porro laudantium fugiat tempora sapiente deserunt soluta pariatur, consequuntur omnis dolore libero repellat distinctio? Minima maiores, odit, magnam quod aliquid deserunt doloribus illo necessitatibus, non amet sequi consequuntur at qui nam inventore. Veritatis accusamus aliquid quaerat aut amet enim adipisci, quam praesentium, reprehenderit consectetur ullam. Voluptates necessitatibus, laboriosam corrupti officiis odit quia expedita minus magnam pariatur illo laudantium dolore nam velit id minima cupiditate repellendus neque nulla! Commodi deleniti ex iure quae, aperiam ea libero exercitationem soluta cumque sit voluptatum, illum dolorum?
+                <div class="card-custom-2" style="display: block;">
+                    <h3 class="text-center my-3">Reviews</h3>
+                    <div class="review-container" style="display: flex; flex-direction: column;">
+                        {% for review in reviews %}
+                        <div class="review-item-wrapper my-2" style="display: flex; align-items: center;">
+                            <div class="review-item">
+                                <div class="profile-image" style="background-image: url({{review.schedule.seeker.user.profile_picture.url}}); margin-right: 20px"></div>
+                            </div>
+                            <div class="review-item">
+                                <div class="star-rating" data-rating="{{ review.rating }}" data-category="{{ review.schedule.category }}"></div>                                    
+                                <div style="margin-top: 5px;">"{{ review.review }}"</div>
+                                <div style="font-size: 0.8rem; color: grey; margin-top: 5px;">{{ review.schedule.seeker }}, {{ review.created }}</div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+{% block scripts %}
+<script>
+
+const ratingDiv = document.querySelectorAll('.star-rating');
+
+const ratingFunc = function(rating) {
+    toNum = parseInt(rating);
+    star_template = '<i class="fas fa-star" style="color: orange;"></i>';
+    star_total = ''
+
+    for(let i = 0; i <= rating - 1; i++) {
+        star_total += star_template
+    }
+
+    return star_total
+}
+
+ratingDiv.forEach(e => {
+    e.innerHTML = `<strong>${e.dataset.category}:</strong> ${ratingFunc(e.dataset.rating)}`
+})
+
+</script>
+{% endblock %}
 
 {% endblock %}

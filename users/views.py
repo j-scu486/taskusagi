@@ -12,7 +12,7 @@ import random
 
 from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm, ToDoForm
 from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule, ToDo
-from booking.models import ScheduleBooking
+from booking.models import ScheduleBooking, ScheduleBookingReview
 from .decorators import seeker_required, tasker_required
 
 class SignUpView(generic.TemplateView):
@@ -170,5 +170,9 @@ def todo_delete(request, id):
 def tasker_profile_view(request, _id):
     tasker = Tasker.objects.filter(user=_id).first()
     task_can_do = TaskCanDo.objects.filter(tasker__user=_id)
+    reviews = ScheduleBookingReview.objects.filter(schedule__tasker__user=_id)
 
-    return render(request, 'users/tasker_profile.html', {'tasker': tasker, 'task_can_do': task_can_do})
+    return render(request, 'users/tasker_profile.html', {'tasker': tasker, 
+                                                        'task_can_do': task_can_do,
+                                                        'reviews': reviews
+                                                        })
