@@ -1,9 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<section id="signup">
+    <div class="container">
+        <div class="wrapper">
+            <h2>Are you looking to help... or be helped? </h2>
+            <div class="btn-wrapper">
+                <a class="btn-custom-1"href="{% url 'user:tasker-signup' %}">Wanting to help</a>    
+                <a class="btn-custom-1"href="{% url 'user:seeker-signup' %}">Looking for help</a>
+            </div>
 
-    <h2>Are you looking to help... or be helped? </h2>
-    <a href="{% url 'user:seeker-signup' %}">Looking for help</a>
-    <a href="{% url 'user:tasker-signup' %}">Wanting to help</a>
+        </div>
+    </div>
+
+</section>
+
 
 {% endblock %}

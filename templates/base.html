@@ -13,22 +13,16 @@
     
     <!-- NAVBAR -->
     {% block navbar %}
-    {% if request.user.is_authenticated %}
     <div class="container">
       {% include 'utilities/_nav.html' %}
     </div>
-    {% endif %}
     {% endblock %}
 
     {% block content %}
 
     {% endblock %}
 
-{% if request.user.is_authenticated %}
-
   {% include 'utilities/_footer.html' %}
-
-{% endif %}
 
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>     

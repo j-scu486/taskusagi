@@ -8,23 +8,29 @@
   
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav">
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'user:profile_edit' %}">Edit Profile</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'booking:booking-list' request.user.id %}">View my bookings</a>
           </li>
-      {% if request.user.is_tasker %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'user:tasks' %}">View Tasks</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'user:tasker-schedule' %}">My Schedule</a>
-      </li>
-      {% endif %}
+            {% if request.user.is_tasker %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'user:tasks' %}">View Tasks</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'user:tasker-schedule' %}">My Schedule</a>
+            </li>
+            {% endif %}
           <li class="nav-item ml-3">
               <a class="nav-link btn btn-outline-primary" href="{% url 'logout' %}">Logout</a>
           </li>
+          {% else %}
+          <li class="nav-item ml-3">
+            <a class="nav-link btn btn-outline-primary" href="{% url 'login' %}">Login</a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </nav>
