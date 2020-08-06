@@ -105,7 +105,7 @@ def schedule_booking(request, _id, category):
             booking.save()
             # Create a new message instance and set up
             
-            messages.add_message(request, messages.SUCCESS, 'You\'re all set!')
+            messages.add_message(request, messages.SUCCESS, 'Done! Your task has been booked!')
             return redirect(reverse('booking:booking-list', kwargs={'_id': request.user.id}))
     else:
         form = ScheduleBookingForm()

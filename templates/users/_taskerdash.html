@@ -1,0 +1,19 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<h2>Welcome back, {{ user.first_name }}</h2>
+<div class="upcoming-jobs">
+    {% if upcoming_tasks %}
+        <h3>Upcoming jobs</h3>
+        {% for task in upcoming_tasks %}
+            <p>{{ task.seeker }}</p>
+            <p>{{ task.category }}</p>
+            <p>{{task.booking}}</p>
+            <a href="{{ task.get_absolute_url }}">Click for more info</a>
+        {% endfor %}
+    {% endif %}
+    
+</div>
+<div class="month-pay">
+    <p>You've made ￥{{ month_earnings }} this month</p>
+</div>

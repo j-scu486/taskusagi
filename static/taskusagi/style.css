@@ -5,6 +5,8 @@
     --secondary-text-color: rgb(133, 133, 133);
     --main-text-hover: rgb(121, 0, 151);
     --card-outline: rgb(211, 211, 211);
+    --success-message: rgba(14, 173, 14, 0.6);
+    --error-message: rgb(253, 113, 113);
 }
 
 
@@ -89,6 +91,30 @@ ul {
     }
 }
 
+/* MESSAGES */
+
+.messages .success {
+    display: block;
+    text-align: center;
+    background-color: var(--success-message);
+    border-radius: 20px;
+    color: #fff;
+    padding: 1rem;
+    width: 20%;
+    margin: 0 auto;
+}
+
+.messages .error {
+    display: block;
+    text-align: center;
+    background-color: var(--error-message);
+    border-radius: 20px;
+    color: #fff;
+    padding: 1rem;
+    width: 20%;
+    margin: 0 auto;
+}
+
 /* FOOTER SETTINGS */
 
 /* Only for desktop and large devices */
@@ -103,7 +129,7 @@ ul {
       footer {
         position: absolute;
         left: 0;
-        bottom: 0;
+        bottom: -100px;
         height: 300px;
         width: 100%;
       }

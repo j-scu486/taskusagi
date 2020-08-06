@@ -4,13 +4,9 @@
 <section id="booking-list">
 <div class="container">
     <h1 class="my-3">Your bookings</h1>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+    
+    {% include 'utilities/_messages.html' %}
+
     <table class="table">
         <thead>
             <tr>

@@ -4,13 +4,9 @@
 {% block content %}
 <div class="container">
     <h2 class="mt-5">Edit your profile</h2>
-    {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}
+
+    {% include 'utilities/_messages.html' %}
+    
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-row">

@@ -4,97 +4,13 @@
 
 {% block content %}
 <section id="dashboard">
-    <!-- If the user is a tasker... -->
     <div class="container">
-        {% if user.is_tasker %}
-        <h2>Welcome back, {{ user.first_name }}</h2>
-        <div class="upcoming-jobs">
-            {% if upcoming_tasks %}
-                <h3>Upcoming jobs</h3>
-                {% for task in upcoming_tasks %}
-                    <p>{{ task.seeker }}</p>
-                    <p>{{ task.category }}</p>
-                    <p>{{task.booking}}</p>
-                    <a href="{{ task.get_absolute_url }}">Click for more info</a>
-                {% endfor %}
-            {% endif %}
-            
-        </div>
-        <div class="month-pay">
-            <p>You've made ￥{{ month_earnings }} this month</p>
-        </div>
+    {% if user.is_tasker %}
+        {% include 'users/_taskerdash.html' %}
     {% endif%}
 
-    <!-- If the user is a seeker... -->
     {% if user.is_seeker%}
-    <div class="dashboard-tasks-container">
-        <div class="next-task-container">
-        <h2 class="text-center mb-5 mt-5">What's your next task?</h2>
-            <div class="dashboard-tasks-links">
-                {% for category in categories %}
-                    <a class="btn-custom-1" href="{% url 'booking:booking-search' category.0 %}">{{ category.1|title }}</a>
-                {% endfor %}
-            </div>
-            <div class="image-container">
-                <img class="dashboard-tool" src="{% static 'taskusagi/img/tool.svg' %}" alt="">
-            </div>
-        </div>
-
-            <div class="todo-container">
-                <h2 class="todo-header">What else is on your to-do list?</h2>
-                {% for todo in todo_list %}
-                <div class="todo-item-container">
-                    <p class="todo-item">
-                        {{ todo.todo }}
-                    </p> 
-                    <form action="{% url 'user:todo-delete' todo.id %}" method="POST" >
-                        {% csrf_token %}
-                        <input type="submit" class="todo-delete" value="x" class="todo-delete">
-                    </form>
-                </div>
-
-
-                {% endfor %}
-                <div class="todo-submit-container">
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ form }}
-                        <input type="submit" value="+" class="todo-submit">
-                    </form>
-                </div>
-
-            </div>
-            <h2 class="mt-5 mb-5">Support our newest taskers!</h2>
-
-            <div class="tasker-card-container">
-                {% for tasker in new_taskers %}
-                <div class="card-custom-2">
-                    <div class="info-1">
-                       <div class="info-container">
-                           <h2 style="text-align: center;">{{ tasker }}</h2>
-                           <div class="picture-container" style="margin: 1rem 0;">
-                            <div class="picture">
-                                <div class="profile-image" style="background-image: url({{ tasker.user.profile_picture.url }})"></div>
-                            </div>
-                        </div>
-                           <ul>
-                               <li><i class="far fa-star"></i> {{ tasker.rating }} / 5 positive rating</li>
-                               <li><i class="far fa-check-circle"></i> {{ tasker.completed }} tasks successfully completed</li>
-                               <li><i class="fas fa-language"></i> {{ tasker.user.get_language }}</li>
-                           </ul>
-                       </div>
-                    </div>
-                    <div class="info-2">
-                        <p>{{ tasker.user.bio|truncatechars:80 }}</p>
-                    </div>
-                    <div class="info-3 my-4">
-                        <a href="{% url 'user:tasker-profile' tasker.user.id %}">View tasker profile</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
+        {% include 'users/_seekerdash.html' %}
     {% endif %}
     </div>
  
