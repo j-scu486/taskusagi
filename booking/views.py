@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.http import JsonResponse
 from django.contrib import messages
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from users.models import Schedule, TaskCanDo, Tasker, TaskSeeker
 from users.decorators import seeker_required, tasker_required
@@ -10,6 +11,7 @@ from booking.forms import ScheduleBookingForm, ScheduleBookingReviewForm
 from .ratings import r
 import datetime
 
+@login_required
 def booking_detail(request, id):
     booking = ScheduleBooking.objects.get(id=id)
 
@@ -41,6 +43,7 @@ def booking_detail(request, id):
 
     return render(request, 'booking/booking_detail.html', {'booking': booking, 'form': form})
 
+@login_required
 def booking_list(request, _id):
     bookings = None
 
@@ -53,6 +56,8 @@ def booking_list(request, _id):
 
     return render(request, 'booking/booking_list.html', {'bookings': bookings})
 
+@login_required
+@user_passes_test(seeker_required)
 def booking_search(request, category):
     results = TaskCanDo.objects.filter(category=category)
     category_name = results[0].catagory_display() if results else None
@@ -81,6 +86,8 @@ def booking_search(request, category):
 
     return render(request, 'booking/booking_search.html', {'results': results, 'category_name': category_name})
 
+@login_required
+@user_passes_test(seeker_required)
 def schedule_booking(request, _id, category):
     day_arr = Schedule.get_unavailable_days(_id)
     form_cat = None
@@ -94,13 +101,11 @@ def schedule_booking(request, _id, category):
         if form.is_valid():
             # Create a new booking
             booking = form.save(commit=False)
-            tasker = Tasker.objects.get(user=_id)
-            seeker = TaskSeeker.objects.get(user=request.user.id)
 
             booking.category = form_cat
-            booking.tasker = tasker
-            booking.seeker = seeker
-            booking.price = TaskCanDo.objects.filter(tasker=tasker).first().price
+            booking.tasker = Tasker.objects.get(user=_id)
+            booking.seeker = TaskSeeker.objects.get(user=request.user.id)
+            booking.price = TaskCanDo.objects.filter(tasker=Tasker.objects.get(user=_id)).first().price
 
             booking.save()
             # Create a new message instance and set up

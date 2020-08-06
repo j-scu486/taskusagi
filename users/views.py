@@ -167,6 +167,7 @@ def todo_delete(request, id):
 
     return redirect('user:dashboard')
 
+@login_required
 def tasker_profile_view(request, _id):
     tasker = Tasker.objects.filter(user=_id).first()
     task_can_do = TaskCanDo.objects.filter(tasker__user=_id)
