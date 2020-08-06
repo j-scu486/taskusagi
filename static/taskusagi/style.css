@@ -89,6 +89,25 @@ ul {
     }
 }
 
+/* FOOTER SETTINGS */
+
+/* Only for desktop and large devices */
+@media (min-width: 576px) { 
+    html {
+        position: relative;
+        min-height: 100%;
+      }
+      body {
+        margin: 0 0 300px; /* bottom = footer height */
+      }
+      footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 300px;
+        width: 100%;
+      }
+ }
 
 /* NAVBAR */
 
@@ -414,6 +433,14 @@ ul {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+#booking-detail .detail-reviewed {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* TASKER PROFILE */

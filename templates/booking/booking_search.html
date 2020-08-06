@@ -84,9 +84,8 @@
                             <p>{{ result.tasker.user.bio }}</p>
                         </div>
                         <hr>
-                        <div data-id="{{result.tasker.user.id}}" class="modal-info-item my-3">
-                            
-                        </div>
+                        <div data-id="{{result.tasker.user.id}}" class="modal-info-item my-3"></div>
+                        <a style="display: block; text-align: center;" href="{% url 'user:tasker-profile' _id=result.tasker.user.id %}">See all reviews</a>
                     </div>
   
                 </div>
@@ -131,7 +130,6 @@ myModalLink.forEach(modal => {
         fetch(`ajax/reviews/${modal.dataset.id}/`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 allModals.forEach(e => {
                     if(parseInt(e.dataset.id) === data['user_id']) {
                         data['data'].forEach(review => {

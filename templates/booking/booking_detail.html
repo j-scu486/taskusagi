@@ -39,8 +39,10 @@
                 <input class="btn-custom-2 my-5" type="submit" value="Submit" style="margin: 0 auto;">
             </form>
             {% else %}
-            <h3 class="text-center">This job has been marked as finished and you left a review.</h3>
-            <h3 class="text-center">Thank you!</h3>
+            <div class="detail-reviewed">
+                <h3 class="text-center">This job has been marked as finished and you left a review.</h3>
+                <h3 class="text-center mt-3">Thank you!</h3>
+            </div>
             {% endif %}
 
         {% endif %}

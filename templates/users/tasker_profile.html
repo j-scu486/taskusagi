@@ -14,7 +14,7 @@
                            <h2 style="text-align: center;">{{ tasker }}</h2>
                            <div class="picture-container" style="margin: 1rem 0;">
                             <div class="picture">
-                                <div class="profile-image" style="background-image: url({{ tasker.user.profile_picture.url }})"></div>
+                                <div class="profile-image" style="background-image: url({{ tasker.user.profile_picture.url }}); width: 225px; height: 225px; border-radius: 50%;"></div>
                             </div>
                         </div>
                            <ul>
@@ -27,7 +27,6 @@
                     <div class="info-2">
                         <h4 class="mt-4">A bit about me...</h4>
                         <p>{{ tasker.user.bio }}</p>
-                        <br>
                     </div>
                 </div>
             </div>
