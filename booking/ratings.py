@@ -7,4 +7,4 @@ if settings.DEBUG:
                       port=settings.REDIS_PORT,
                       db=settings.REDIS_DB)
 else:
-    r = redis.from_url(os.environ.get("REDIS_URL"))
+    r = redis.StrictRedis.from_url(os.environ.get("REDIS_URL"))
