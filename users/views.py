@@ -128,7 +128,7 @@ def dashboard(request, todo_id=None):
         new_taskers.append(taskers_q[rand_arr[i]])
 
     if request.user.is_tasker:
-        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, booking__range=(
+        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, completed=False, booking__range=(
                                                              datetime.today().strftime("%Y-%m-%d"), (datetime.today() + timedelta(days=30)) 
                                                              )).order_by('booking')[:3]
         month_earnings = ScheduleBooking.get_month_earnings(tasker=request.user.tasker)

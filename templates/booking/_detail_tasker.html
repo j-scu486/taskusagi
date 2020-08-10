@@ -9,6 +9,7 @@
             <div class="info-1">
                <div class="info-container">
                    <h2>{{ booking.seeker }}</h2>
+                   <a href="#">Message</a>
                </div>
             </div>
             <div class="info-2">
@@ -22,8 +23,19 @@
     <div class="col-md-6">
         <div class="card-custom" style="display: flex; flex-direction: column;">
             <h4>Task info</h4>
-            <p>Task Type: <strong>{{ booking.category }}</strong></p>
-            <p>Location: </p>
+            <p><strong>Task Type: </strong>{{ booking.category }}</p>
+            <p><strong>Price: </strong>￥{{ booking.price }} /hr</p>
+            <p><strong>Location: </strong> {{ booking.seeker.user.address }}</p>
+            <p><strong>Notes: </strong>{{ booking.notes }}</p>
+            <p><strong>Completed: </strong>
+                {% if booking.completed %}
+                <i class="fas fa-check" style="color: green;"></i>
+                <p><strong>Rating: </strong>{{ review.rating }}</p>
+                <p><strong>Review: </strong>{{ review.review }}</p>
+                {% else %}
+                --
+                {% endif %}
+            </p>
         </div>
 
     </div>

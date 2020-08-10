@@ -14,6 +14,7 @@ import datetime
 @login_required
 def booking_detail(request, id): 
     booking = ScheduleBooking.objects.get(id=id)
+    review = ScheduleBookingReview.objects.filter(schedule=booking).first() if booking.completed else None
 
     if request.method == 'POST':
         form = ScheduleBookingReviewForm(request.POST)
@@ -41,7 +42,7 @@ def booking_detail(request, id):
     else:
         form = ScheduleBookingReviewForm
 
-    return render(request, 'booking/booking_detail.html', {'booking': booking, 'form': form})
+    return render(request, 'booking/booking_detail.html', {'booking': booking, 'form': form, 'review': review })
 
 @login_required
 def booking_list(request, _id):
