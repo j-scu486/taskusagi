@@ -82,7 +82,6 @@ def task_delete(request, _id):
 @login_required
 def tasker_schedule(request):
     schedule_list = Schedule.objects.filter(tasker=request.user.id)
-    print(schedule_list)
 
     if request.method == 'POST':
         form = ScheduleCreateForm(request.POST, user=request.user)
@@ -163,7 +162,6 @@ def dashboard(request, todo_id=None):
 @login_required
 def todo_delete(request, id):
     obj = ToDo.objects.get(id=id, seeker=request.user.taskseeker)
-    print(obj)
 
     if request.method == 'POST':
         obj.delete()
