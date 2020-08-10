@@ -1,26 +1,42 @@
 {% extends 'base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
 
-<h2>Add tasks</h2>
-<div>
-    {% for task in tasks %}
-        <div>
-            <p>{{ task.category }} | {{ task.price}}</p>
-            <p>{{ task.description }}</p>
-            <form action="{% url 'user:task-delete' task.id %}" method="POST">
-                {% csrf_token %}
-                <button type="submit">Delete</button>
-            </form>
-
+<section id="tasks">
+    <div class="container">
+        <h2 class="my-5">Your currently registered tasks</h2>
+        <div class="task-card-wrapper">
+            {% for task in tasks %}
+            <div class="task-card">
+                <h3>{{ task.get_category_display }}</h3>
+                <h4>￥{{ task.price }} /hr</h4>
+                <p class="my-2">{{ task.description }}</p>
+                <form action="{% url 'user:task-delete' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn-custom-1 my-3" type="submit">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
         </div>
-    {% endfor %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
+        <div class="my-5">
+            <h2>Add a new task</h2>
+            <form method="POST" class="mt-5">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        {{ form.category|as_crispy_field }}
+                        {{ form.price|as_crispy_field }}
+                        <input class="btn-custom-2" type="submit" value="Add Task">
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form.description|as_crispy_field }}
+                    </div>
+                </div>
 
-</div>
+            </form>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

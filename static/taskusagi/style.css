@@ -387,6 +387,32 @@ ul {
     text-align: center;
 }
 
+/* TAKSS */
+
+#tasks .task-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#tasks .task-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--card-outline);
+    padding: 1rem;
+    margin: 1rem;
+    width: 300px;
+}
+
+#tasks .task-card p {
+    color: rgb(136, 136, 136);
+}
+
+#tasks .task-card h3 {
+    color: var(--main-text-hover)
+}
+
 
 /* FOOTER */
 
