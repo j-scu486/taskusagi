@@ -25,7 +25,7 @@ SECRET_KEY = '=pgf(ocmd^ntlg^h_o5rz-0k*$#@=fq@gw_*7d_jho+u)0_ds-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://task-usagi.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['task-usagi.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
