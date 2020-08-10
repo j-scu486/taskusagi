@@ -1,0 +1,42 @@
+{% load crispy_forms_tags %}
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Your tasker for this job: </h3>
+            <div class="card-custom">
+                <div class="picture-container">
+                    <div class="picture">
+                        <div class="profile-image" style="background-image: url({{ booking.tasker.user.profile_picture.url }})"></div>
+                    </div>
+                </div>
+                <div class="info-1">
+                   <div class="info-container">
+                       <h2>{{ booking.tasker }}</h2>
+                        <h3>￥{{ booking.price }} /hr</h3>
+                   </div>
+                </div>
+                <div class="info-2">
+                    
+                    <p>Scheduled for:</p>
+                    <p>{{ booking.booking }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            {% if booking.completed is False %}
+            <h3>Has the job been finished? Leave a review!</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <input class="btn-custom-2 my-5" type="submit" value="Submit" style="margin: 0 auto;">
+            </form>
+            {% else %}
+            <div class="detail-reviewed">
+                <h3 class="text-center">This job has been marked as finished and you left a review.</h3>
+                <h3 class="text-center mt-3">Thank you!</h3>
+            </div>
+            {% endif %}
+        </div>
+    </div>

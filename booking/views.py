@@ -12,7 +12,7 @@ from .ratings import r
 import datetime
 
 @login_required
-def booking_detail(request, id):
+def booking_detail(request, id): 
     booking = ScheduleBooking.objects.get(id=id)
 
     if request.method == 'POST':

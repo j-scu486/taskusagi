@@ -34,6 +34,7 @@ class TaskerSignUpView(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
+        messages.add_message(self.request, messages.INFO, 'Please complete your registration!')
         return redirect('user:profile_edit')
 
 @login_required
@@ -55,13 +56,13 @@ def tasks(request):
     tasks = TaskCanDo.objects.filter(tasker=request.user.id)
 
     if request.method == 'POST':
-        form = TaskCreateForm(request.POST)
+        form = TaskCreateForm(request.POST, user=request.user)
         if form.is_valid():
             task = form.save(commit=False)
             task.tasker = Tasker.objects.filter(user=request.user.id)[0]
             task.save()
     else:
-        form = TaskCreateForm()
+        form = TaskCreateForm(user=request.user)
 
 
     return render(request, 'users/tasks.html', {'tasks': tasks,
@@ -128,8 +129,10 @@ def dashboard(request, todo_id=None):
         new_taskers.append(taskers_q[rand_arr[i]])
 
     if request.user.is_tasker:
-        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, booking__contains=datetime.today().strftime("%Y-%m-%d")).order_by('booking')[:3]
-        month_earnings = ScheduleBooking.get_month_earnings()
+        upcoming_tasks = ScheduleBooking.objects.filter(tasker=request.user.tasker, booking__range=(
+                                                             datetime.today().strftime("%Y-%m-%d"), (datetime.today() + timedelta(days=30)) 
+                                                             )).order_by('booking')[:3]
+        month_earnings = ScheduleBooking.get_month_earnings(tasker=request.user.tasker)
 
     if request.user.is_seeker:
         if request.method == 'POST':

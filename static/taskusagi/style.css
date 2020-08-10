@@ -7,6 +7,7 @@
     --card-outline: rgb(211, 211, 211);
     --success-message: rgba(14, 173, 14, 0.6);
     --error-message: rgb(253, 113, 113);
+    --info-message: rgba(166,0,207, 0.7);
 }
 
 
@@ -104,7 +105,7 @@ ul {
     margin: 0 auto;
 }
 
-.messages .error {
+.messages .info {
     display: block;
     text-align: center;
     background-color: var(--error-message);
@@ -364,6 +365,26 @@ ul {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 1rem;
+}
+
+#dashboard .wrapper .dash-item > i {
+    color: var(--main-text-color)
+}
+
+#dashboard .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#dashboard .dash-item {
+    display: flex;
+    margin: 25px 0;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 

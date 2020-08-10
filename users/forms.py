@@ -62,10 +62,20 @@ class TaskCreateForm(forms.ModelForm):
         model = TaskCanDo
         fields = ['category', 'description', 'price']
 
-    # Need to make sure that only one instance of a category exists
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(TaskCreateForm, self).__init__(*args,**kwargs)
 
-    # def clean_category(self):
-    #     data = self.cleaned_data['category']
+    def clean_category(self):
+        category = self.cleaned_data['category']
+        tasks = TaskCanDo.objects.filter(tasker=self.user.id)
+        
+        for task in tasks:
+            if category == task.category:
+                raise ValidationError('You can only have one task type registered at a time')
+
+        return category
+
 
 class TaskDeleteForm(forms.ModelForm):
 

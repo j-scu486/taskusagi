@@ -1,19 +1,48 @@
 {% load static %}
 {% load crispy_forms_tags %}
 
-<h2>Welcome back, {{ user.first_name }}</h2>
-<div class="upcoming-jobs">
-    {% if upcoming_tasks %}
-        <h3>Upcoming jobs</h3>
-        {% for task in upcoming_tasks %}
-            <p>{{ task.seeker }}</p>
-            <p>{{ task.category }}</p>
-            <p>{{task.booking}}</p>
-            <a href="{{ task.get_absolute_url }}">Click for more info</a>
-        {% endfor %}
-    {% endif %}
-    
-</div>
-<div class="month-pay">
-    <p>You've made ￥{{ month_earnings }} this month</p>
+<h1 class="my-5 text-center">Welcome back, {{ user.first_name }}!</h1> 
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 my-3">
+            <div class="wrapper">
+                <div class="dash-item" style="margin: 0;">
+                    <i class="fas fa-yen-sign fa-3x my-3"></i>
+                    <h3>You've made ￥{{ month_earnings }} this month!</h3>
+                </div>
+                <div class="dash-item">
+                    <i class="fas fa-tasks fa-3x my-3"></i>
+                    <h3>You've completed {{ user.tasker.completed }} tasks in total!</h3>
+                </div>
+                <div class="dash-item">
+                    <i class="far fa-envelope fa-3x my-3"></i>
+                    <h3>You have 1 new message that needs responding</h3>
+                </div>
+            </div>
+        </div>
+        <div class="upcoming-jobs col-md-6 my-3">
+            {% if upcoming_tasks %}
+            <h3>Upcoming jobs</h3>
+            {% for task in upcoming_tasks %}
+            <div class="card-custom">
+                <div class="picture-container">
+                    <div class="picture">
+                        <div class="profile-image" style="background-image: url({{ task.seeker.user.profile_picture.url }})"></div>
+                    </div>
+                </div>
+                <div class="info-1">
+                    <div class="info-container">
+                        <p><strong>Client:</strong> {{ task.seeker }}</p>
+                        <p><strong>Task Type:</strong> {{ task.category }}</p>
+                        <p><strong>Time:</strong> {{task.booking}}</p>
+                        <a href="{{ task.get_absolute_url }}">Click for more info</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <h3>You have no upcoming jobs</h3>
+        {% endif %}
+        </div>
+    </div>
 </div>

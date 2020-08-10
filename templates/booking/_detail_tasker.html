@@ -1,0 +1,30 @@
+<div class="row">
+    <div class="col-md-6">
+        <div class="card-custom">
+            <div class="picture-container">
+                <div class="picture">
+                    <div class="profile-image" style="background-image: url({{ booking.seeker.user.profile_picture.url }})"></div>
+                </div>
+            </div>
+            <div class="info-1">
+               <div class="info-container">
+                   <h2>{{ booking.seeker }}</h2>
+               </div>
+            </div>
+            <div class="info-2">
+                
+                <p>Scheduled for:</p>
+                <p>{{ booking.booking }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card-custom" style="display: flex; flex-direction: column;">
+            <h4>Task info</h4>
+            <p>Task Type: <strong>{{ booking.category }}</strong></p>
+            <p>Location: </p>
+        </div>
+
+    </div>
+</div>

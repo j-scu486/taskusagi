@@ -10,7 +10,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Tasker</th>
+                <th scope="col">
+                    {% if request.user.is_seeker %}
+                    Tasker
+                    {% else %}
+                    Task Seeker
+                    {% endif %}
+                </th>
                 <th scope="col">Scheduled</th>
                 <th scope="col">Task Type</th>
                 <th scope="col">Completed</th>
@@ -20,7 +26,13 @@
         <tbody>
             {% for booking in bookings %}
             <tr>
-                <td>{{ booking.tasker }}</td>
+                <td>
+                    {% if request.user.is_seeker %}
+                    {{ booking.tasker }}
+                    {% else %}
+                    {{ booking.seeker }}
+                    {% endif %}
+                </td>
                 <td>{{ booking.booking}}</td>
                 <td>{{ booking.category }}</td>
                 <td style="text-align: center; vertical-align: middle;">

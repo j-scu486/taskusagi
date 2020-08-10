@@ -29,8 +29,8 @@ class ScheduleBooking(models.Model):
         return bookings_dict
 
     @classmethod
-    def get_month_earnings(cls):
-        current_month_schedules = cls.objects.filter(booking__month=datetime.today().month)
+    def get_month_earnings(cls, tasker):
+        current_month_schedules = cls.objects.filter(tasker=tasker, booking__month=datetime.today().month)
         bookings_list = []
         for booking in current_month_schedules:
             bookings_list.append(booking.price)
