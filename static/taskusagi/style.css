@@ -214,6 +214,20 @@ ul {
     border-radius: 5px;
 }
 
+.btn-custom-3 {
+    display: block;
+    border: none;
+    background-color: var(--error-message);
+    color: #fff;
+    border-radius: 50%;
+    margin-left: 20px;
+    transition: box-shadow .25s;
+}
+
+.btn-custom-3:hover {
+    box-shadow: 1px 1px 5px var(--error-message);
+}
+
 .btn-custom-2:hover {
     color: #fff;
 }
@@ -387,7 +401,7 @@ ul {
     text-align: center;
 }
 
-/* TAKSS */
+/* TASKS */
 
 #tasks .task-card-wrapper {
     display: flex;
@@ -413,7 +427,17 @@ ul {
     color: var(--main-text-hover)
 }
 
+/* TASKER SCHEDULE */
 
+#tasker-schedule .schedule-wrapper {
+    display: flex;
+}
+
+#tasker-schedule .schedule-item {
+    display: flex;
+    align-items: center;
+    margin: 0 50px;
+}
 /* FOOTER */
 
 .page-footer {

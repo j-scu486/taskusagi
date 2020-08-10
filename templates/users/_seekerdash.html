@@ -23,7 +23,7 @@
                 </p> 
                 <form action="{% url 'user:todo-delete' todo.id %}" method="POST" >
                     {% csrf_token %}
-                    <input type="submit" class="todo-delete" value="x" class="todo-delete">
+                    <input type="submit" class="todo-delete" value="x"">
                 </form>
             </div>
 

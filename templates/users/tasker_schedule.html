@@ -1,23 +1,44 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
-<h1>Schedule</h1>
-
-{% for schedule in schedule_list %}
-    <p>
-        {{ schedule }}
-        <form action="{% url 'user:tasker-schedule-delete' schedule.id %}" method="POST">
+<section id="tasker-schedule">
+    <div class="container">
+        <h1 class="my-5">Your current schedule: </h1>
+        <div class="schedule-wrapper">
+            {% for schedule in schedule_list %}
+            <div class="schedule-item">
+                <div class="items">
+                    <p><strong>Day: </strong>{{ schedule.get_day_of_week_display }}</p>
+                    <p><strong>Start time: </strong> {{schedule.start_time}}</p>
+                    <p><strong>End Time: </strong> {{ schedule.end_time }}</p>  
+                </div>
+                <form action="{% url 'user:tasker-schedule-delete' schedule.id %}" method="POST">
+                    {% csrf_token %}
+                    <input type="submit" value="x" class="btn-custom-3">
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+        <h3 class="my-5">Register a new schedule time</h3>
+        <form method="POST">
             {% csrf_token %}
-            <button type="submit">X</button>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    {{ form.day_of_week|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form.start_time|as_crispy_field}}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form.end_time|as_crispy_field}}
+                </div>
+            </div>
+            <input class="btn-custom-2"type="submit" value="Add new schedule">
         </form>
-    </p>
+    </div>
+    
+</section>
 
-{% endfor %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="submit">
-</form>
 {% endblock %}
