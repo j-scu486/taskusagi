@@ -86,6 +86,13 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    "default": {
+         "BACKEND": "redis_cache.RedisCache",
+         "LOCATION": os.environ.get('REDIS_URL'),
+    }
+}
+
 import dj_database_url
 
 db_from_env = dj_database_url.config(conn_max_age=600)
