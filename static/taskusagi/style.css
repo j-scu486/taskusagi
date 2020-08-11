@@ -271,7 +271,6 @@ ul {
 }
 
 .form-signin button.login-btn{
-    width: 300px;
     display: block;
     margin: 25px auto;
     outline: none;
