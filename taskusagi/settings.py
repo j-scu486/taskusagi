@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '=pgf(ocmd^ntlg^h_o5rz-0k*$#@=fq@gw_*7d_jho+u)0_ds-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['task-usagi.herokuapp.com', '127.0.0.1']
 
@@ -156,9 +156,8 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # AWS SETTINGS
 
-if DEBUG == False:
-    AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-    AWS_DEFAULT_ACL = None
-    S3_BUCKET = os.environ.get('S3_BUCKET')
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_DEFAULT_ACL = None
+S3_BUCKET = os.environ.get('S3_BUCKET')
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
