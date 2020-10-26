@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<section id="messages">
+    <div class="messages-container">
+        <div class="chat-list">
+            {% if user.is_tasker %}
+                {% for contact in contact_list %}
+                <a style="color: inherit;" href="{% url 'chat:my-messages' contact.id %}">
+                    <div class="chat-list-item-container">
+                        <div class="chat-list-item-1">
+                            <div class="profile-image-sm" style="background-image: url({{ contact.seeker.user.profile_picture.url }})"></div>
+                            <div class="chat-list-item">
+                                <p style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.seeker }}</p>
+                                <p class="chat-list-item-faded" style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.get_most_recent_message.message|truncatechars:10 }}</p>
+                            </div>
+                        </div>
+                        <div class="chat-list-item-2">
+                            <div class="chat-list-item-date">
+                                <p class="chat-list-item-faded">{{ contact.get_most_recent_message.message_created|date:"g:i a" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% else %}
+                {% for contact in contact_list %}
+                <a style="color: inherit;" href="{% url 'chat:my-messages' contact.id %}">
+                    <div class="chat-list-item-container">
+                        <div class="chat-list-item-1">
+                            <div class="profile-image-sm" style="background-image: url({{ contact.tasker.user.profile_picture.url }})"></div>
+                            <div class="chat-list-item">
+                                <p style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.tasker }}</p>
+                                <p class="chat-list-item-faded" style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.get_most_recent_message.message|truncatechars:10 }}</p>
+                            </div>
+                        </div>
+                        <div class="chat-list-item-2">
+                            <div class="chat-list-item-date">
+                                <p class="chat-list-item-faded">{{ contact.get_most_recent_message.message_created|date:"g:i a" }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="chat-window-container">
+            <div class="chat-window">
+                <div class="messages"></div>
+            </div>
+            <div class="chat-send-form">
+                <form method="POST" id="send-message">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-md-10">
+                            {{ form.message|as_crispy_field }}
+                        </div>
+                        <input class="btn-custom-1"type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</section>
+    
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+const messagesContainer = document.querySelector('.messages');
+    const booking_id = {{ booking_id }}
+    const receiverId = {{ receiver_id }}
+    const senderId = {{ request.user.id }}
+    const chatWindow = document.querySelector('.chat-window-container')
+    let messagesId;
+    
+    // RECEIVE messages
+
+    fetch(`messages/json/${booking_id}`)
+        .then(response => response.json())
+        .then(data => {
+            let messages = [...data]
+            // Set up initial messages
+            messages.forEach(message => {
+                console.log(message)
+                if(message.sent['id'] === senderId){
+                    messagesContainer.innerHTML += `
+                        <div class="chat-sender">${message.message}</div>`
+                } else {
+                    messagesContainer.innerHTML += `
+                        <div class="chat-receiver">${message.message}</div>`
+                }
+                })
+            // Messages ID that will be used to filter new messages
+            messagesId = messages.map(message => {
+                return message.id
+            })
+
+        }
+        )
+
+    // Ajax call every 3 seconds to check for new messages and update template
+    setInterval(function() {
+    fetch(`messages/json/${booking_id}`)
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(new_message => {
+                if(messagesId.indexOf(new_message.id) == -1) {
+                    messagesId.push(new_message.id)
+
+                if(new_message.sent['id'] === senderId){
+                    messagesContainer.innerHTML += `
+                        <div class="chat-sender">${new_message.message}</div>`
+                } else {
+                    messagesContainer.innerHTML += `
+                        <div class="chat-receiver">${new_message.message}</div>`
+                }
+                }
+            })
+            // chatWindow.scrollTop = chatWindow.scrollHeight; Autoscroll to bottom
+        }
+        )
+    }, 3000) 
+
+    // SEND new message
+
+    const submitMessage = document.querySelector('#send-message');
+    
+    submitMessage.addEventListener('submit', function(e) {
+        const message = document.querySelector('#id_message').value;
+        data = {
+            'message': message,
+            'receiver_id': receiverId,
+        }
+
+        e.preventDefault()
+        fetch(`messages/json/send_message/${booking_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+    })
+
+</script>
+
+{% endblock %}

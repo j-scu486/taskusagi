@@ -18,6 +18,10 @@ class ScheduleBooking(models.Model):
     def get_absolute_url(self):
         return reverse('booking:booking-detail', kwargs={'id': self.id })
 
+    @property
+    def get_most_recent_message(self):
+        return self.message_set.latest('message_created')
+
     @classmethod
     def get_bookings(cls, _id, date):
         test = cls.objects.filter(tasker=_id, booking__date=date)

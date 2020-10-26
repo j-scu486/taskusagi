@@ -82,6 +82,20 @@ ul {
     background-position: center center;
 }
 
+.profile-image-sm {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 60px;
+    -webkit-background-clip: padding-box;
+    -moz-border-radius: 60px;
+    -moz-background-clip: padding;
+    border-radius: 60px;
+    background-clip: padding-box;
+    float: left;
+    background-size: cover;
+    background-position: center center;
+}
+
 @media (max-width: 576px) { 
     .card-custom {
         grid-template-areas: 
@@ -554,6 +568,90 @@ ul {
     color: var(--secondary-text-color);
 }
 
+/* CHAT */
+
+#messages .messages-container {
+    display: flex;
+    max-width: 1100px;
+    margin: 50px auto;
+    
+}
+
+#messages .chat-window {
+    height: 80vh;
+    overflow-y: scroll;
+}
+#messages .chat-list {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--card-outline);
+    width: 30%;
+    margin-right: 50px;
+    overflow-y: scroll;
+    height: 80vh;
+}
+
+#messages .chat-list-item {
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+}
+
+#messages .chat-list-item-faded {
+    color: rgba(83, 83, 83, 0.7);
+}
+
+#messages .chat-list-item-container {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(104, 104, 104, 0.6);
+}
+
+#messages .chat-window-container {
+    border: 2px solid var(--card-outline);
+    padding: 20px;
+    width: 70%;
+}
+
+#messages .chat-send-form {
+    margin-top: 20px;
+}
+#messages form .form-row {
+    display: flex;
+    align-items: center;
+}
+ 
+#messages .chat-sender {
+    display: inline-block;
+    clear:both;
+    float:left;
+    background-color: var(--info-message);
+    color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 5px;
+    width: auto;
+    text-align: left;
+}
+
+#messages .chat-receiver {
+    display: inline-block;
+    clear: both;
+    float: right;
+    background-color: rgb(238, 238, 238);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 5px;
+    display: block;
+    width: auto;
+    text-align: right;
+}
+
+#messages form .form-group {
+    margin-bottom: 0;
+}   
 /* SIGNUP */
 
 #signup .container {

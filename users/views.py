@@ -118,7 +118,7 @@ def dashboard(request, todo_id=None):
     todo_list = None
     form = None
     today = datetime.today()
-    days_check = datetime.today() - timedelta(days=30)
+    days_check = datetime.today() - timedelta(days=360)
     new_taskers = []
 
     taskers_q = Tasker.objects.filter(user__date_joined__range=(days_check, today))
