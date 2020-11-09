@@ -578,7 +578,7 @@ ul {
 }
 
 #messages .chat-window {
-    height: 80vh;
+    height: 70vh;
     overflow-y: scroll;
 }
 #messages .chat-list {

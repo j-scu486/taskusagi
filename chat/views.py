@@ -7,6 +7,16 @@ from .forms import MessageForm
 from .decorators import sender_or_receiver
 import json
 
+def message_home(request):
+    contact_list = None
+
+    if request.user.is_tasker:
+        contact_list = ScheduleBooking.objects.filter(tasker=request.user.id)
+    else:
+        contact_list = ScheduleBooking.objects.filter(seeker=request.user.id)
+
+    return render(request, 'chat/message_home.html', {'contact_list': contact_list})
+
 @sender_or_receiver
 def messages(request, booking_id):
     form = MessageForm()

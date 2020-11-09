@@ -14,7 +14,10 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{% url 'booking:booking-list' request.user.id %}">View my bookings</a>
-          </li>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'chat:message-home' %}">My Messages</a>
+        </li>
             {% if request.user.is_tasker %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'user:tasks' %}">View Tasks</a>

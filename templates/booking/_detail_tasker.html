@@ -9,7 +9,7 @@
             <div class="info-1">
                <div class="info-container">
                    <h2>{{ booking.seeker }}</h2>
-                   <a href="#">Message</a>
+                   <a href="{% url 'chat:my-messages' booking.id %}">{% if not booking.completed %}Message{% endif %}</a>
                </div>
             </div>
             <div class="info-2">

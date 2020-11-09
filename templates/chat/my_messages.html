@@ -4,48 +4,8 @@
 {% block content %}
 
 <section id="messages">
-    <div class="messages-container">
-        <div class="chat-list">
-            {% if user.is_tasker %}
-                {% for contact in contact_list %}
-                <a style="color: inherit;" href="{% url 'chat:my-messages' contact.id %}">
-                    <div class="chat-list-item-container">
-                        <div class="chat-list-item-1">
-                            <div class="profile-image-sm" style="background-image: url({{ contact.seeker.user.profile_picture.url }})"></div>
-                            <div class="chat-list-item">
-                                <p style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.seeker }}</p>
-                                <p class="chat-list-item-faded" style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.get_most_recent_message.message|truncatechars:10 }}</p>
-                            </div>
-                        </div>
-                        <div class="chat-list-item-2">
-                            <div class="chat-list-item-date">
-                                <p class="chat-list-item-faded">{{ contact.get_most_recent_message.message_created|date:"g:i a" }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            {% else %}
-                {% for contact in contact_list %}
-                <a style="color: inherit;" href="{% url 'chat:my-messages' contact.id %}">
-                    <div class="chat-list-item-container">
-                        <div class="chat-list-item-1">
-                            <div class="profile-image-sm" style="background-image: url({{ contact.tasker.user.profile_picture.url }})"></div>
-                            <div class="chat-list-item">
-                                <p style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.tasker }}</p>
-                                <p class="chat-list-item-faded" style="{% if not contact.get_most_recent_message.message_read %}font-weight: 900;{% endif %}">{{ contact.get_most_recent_message.message|truncatechars:10 }}</p>
-                            </div>
-                        </div>
-                        <div class="chat-list-item-2">
-                            <div class="chat-list-item-date">
-                                <p class="chat-list-item-faded">{{ contact.get_most_recent_message.message_created|date:"g:i a" }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                {% endfor %}
-            {% endif %}
-        </div>
+    
+        {% include 'chat/_contactlist.html' %}
 
         <div class="chat-window-container">
             <div class="chat-window">
@@ -72,7 +32,7 @@
 {% block scripts %}
 <script>
 
-const messagesContainer = document.querySelector('.messages');
+    const messagesContainer = document.querySelector('.messages');
     const booking_id = {{ booking_id }}
     const receiverId = {{ receiver_id }}
     const senderId = {{ request.user.id }}
@@ -106,6 +66,8 @@ const messagesContainer = document.querySelector('.messages');
 
     // Ajax call every 3 seconds to check for new messages and update template
     setInterval(function() {
+
+
     fetch(`messages/json/${booking_id}`)
         .then(response => response.json())
         .then(data => {
@@ -122,7 +84,8 @@ const messagesContainer = document.querySelector('.messages');
                 }
                 }
             })
-            // chatWindow.scrollTop = chatWindow.scrollHeight; Autoscroll to bottom
+            document.querySelector('.btn-custom-1').scrollTop = document.querySelector('.btn-custom-1').scrollHeight; 
+            console.log(document.querySelector('.btn-custom-1').scrollTop)
         }
         )
     }, 3000) 
@@ -137,6 +100,7 @@ const messagesContainer = document.querySelector('.messages');
             'message': message,
             'receiver_id': receiverId,
         }
+        submitMessage.reset();
 
         e.preventDefault()
         fetch(`messages/json/send_message/${booking_id}`, {

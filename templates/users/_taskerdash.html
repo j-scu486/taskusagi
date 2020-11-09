@@ -16,7 +16,13 @@
                 </div>
                 <div class="dash-item">
                     <i class="far fa-envelope fa-3x my-3"></i>
-                    <h3>You have 1 new message that needs responding to</h3>
+                    <h3>
+                    {% if  unread_messages %}
+                        You have {{ unread_messages }} new message{{ unread_messages|pluralize }}
+                    {% else %}
+                        You have no new messages!
+                    {% endif %}    
+                    </h3>
                 </div>
             </div>
         </div>

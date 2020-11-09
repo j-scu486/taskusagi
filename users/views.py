@@ -13,6 +13,7 @@ import random
 from users.forms import CustomUserCreationForm, TaskerSignUpForm, CustomUserChangeForm, TaskCreateForm, TaskDeleteForm, ScheduleCreateForm, SeekerSignUpForm, ToDoForm
 from users.models import Tasker, TaskSeeker, CustomUser, TaskCanDo, Schedule, ToDo
 from booking.models import ScheduleBooking, ScheduleBookingReview
+from chat.models import Message
 from .decorators import seeker_required, tasker_required
 
 class SignUpView(generic.TemplateView):
@@ -120,6 +121,7 @@ def dashboard(request, todo_id=None):
     today = datetime.today()
     days_check = datetime.today() - timedelta(days=360)
     new_taskers = []
+    unread_messages = None
 
     taskers_q = Tasker.objects.filter(user__date_joined__range=(days_check, today))
     rand_arr = random.sample(range(0,len(taskers_q)), 3)
@@ -132,6 +134,7 @@ def dashboard(request, todo_id=None):
                                                              datetime.today().strftime("%Y-%m-%d"), (datetime.today() + timedelta(days=30)) 
                                                              )).order_by('booking')[:3]
         month_earnings = ScheduleBooking.get_month_earnings(tasker=request.user.tasker)
+        unread_messages = Message.get_unread_messages(id=request.user.id)
 
     if request.user.is_seeker:
         if request.method == 'POST':
@@ -156,7 +159,8 @@ def dashboard(request, todo_id=None):
                                                 'month_earnings': month_earnings, 
                                                 'form': form, 
                                                 'todo_list': todo_list,
-                                                'new_taskers': new_taskers
+                                                'new_taskers': new_taskers,
+                                                'unread_messages': unread_messages
                                                 })
 
 @login_required

@@ -11,6 +11,14 @@ class Message(models.Model):
     message_read = models.BooleanField(default=False)
 
     @classmethod
+    def get_unread_messages(cls, id):
+        user = CustomUser.objects.filter(id=id).first()
+        sent_messages = cls.objects.filter(user_sent=user, message_read=False).count()
+        received_messages = cls.objects.filter(user_received=user, message_read=False).count()
+
+        return sent_messages + received_messages
+
+    @classmethod
     def get_messages(cls, booking):
         data = []
         booking_instance = cls.objects.filter(booking=booking).order_by('message_created')

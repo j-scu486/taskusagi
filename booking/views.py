@@ -8,6 +8,7 @@ from users.models import Schedule, TaskCanDo, Tasker, TaskSeeker
 from users.decorators import seeker_required, tasker_required
 from booking.models import ScheduleBooking, ScheduleBookingReview
 from booking.forms import ScheduleBookingForm, ScheduleBookingReviewForm
+from chat.models import Message
 from .ratings import r
 import datetime
 
@@ -110,6 +111,13 @@ def schedule_booking(request, _id, category):
 
             booking.save()
             # Create a new message instance and set up
+            new_message = Message(
+                    user_sent = TaskSeeker.objects.get(user=request.user.id).user,
+                    user_received = Tasker.objects.get(user=_id).user,
+                    booking = booking,
+                    message = "Say hi to your next tasker!",
+            )
+            new_message.save()
             
             messages.add_message(request, messages.SUCCESS, 'Done! Your task has been booked!')
             return redirect(reverse('booking:booking-list', kwargs={'_id': request.user.id}))
